@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"log"
+	"unicode"
 
 	"github.com/mongodb/mongo-go-driver/bson"
 	"github.com/mongodb/mongo-go-driver/mongo"
@@ -50,12 +51,12 @@ func (m MongoDBRepository) New(connectionString string) MongoDBRepository {
 
 // Lookup - perform a dictionary lookup
 func (m MongoDBRepository) Lookup(query string) []*Entry {
-	pipeline := bson.M{{
-		"$or": bson.A{{
-			bson.D{{"readings": query}},
-			bson.D{{"kanji": query}}
-		}}
-	}}
+	pipeline := bson.M{
+		"$or": bson.A{
+			bson.M{"readings": query},
+			bson.M{"kanji": query},
+		},
+	}
 	options := options.Find()
 	var results []*Entry
 	cur, err := m.collection.Find(context.TODO(), pipeline, options)
@@ -74,4 +75,23 @@ func (m MongoDBRepository) Lookup(query string) []*Entry {
 		results = append(results, &elem)
 	}
 	return results
+}
+
+func kanjiOnly(s string) bool {
+	for _, r := range s {
+		if !unicode.In(r, unicode.Ideographic) {
+			return false
+		}
+	}
+	return s != ""
+}
+
+// might be unicode.Unified_Ideograph
+func kanaOnly(s string) bool {
+	for _, r := range s {
+		if !unicode.In(r, unicode.Ideographic) {
+			return false
+		}
+	}
+	return s != ""
 }
