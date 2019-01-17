@@ -69,7 +69,9 @@ func segment(tokens []tokenizer.Token) []Word {
 			// Start a new word
 			word = make([]JSONToken, 0)
 		} else if jToken.Surface == jToken.Base {
+			// Add ending to current word
 			word = append(word, jToken)
+			// Add current word
 			words = append(words, word)
 			// Start a new word
 			word = make([]JSONToken, 0)
