@@ -19,7 +19,10 @@ type JSONToken struct {
 }
 
 // Word - one or more JSONTokens
-type Word []JSONToken
+type Word struct {
+	Tokens  []JSONToken `json:"tokens"`
+	Surface string      `json:"surface"`
+}
 
 func newToken(t tokenizer.Token) JSONToken {
 	features := t.Features()
@@ -39,6 +42,14 @@ func newToken(t tokenizer.Token) JSONToken {
 	return result
 }
 
+func getSurface(word Word) Word {
+	word.Surface = ""
+	for _, token := range word.Tokens {
+		word.Surface += token.Surface
+	}
+	return word
+}
+
 func isPunctuation(pos []string) bool {
 	if len(pos) < 2 {
 		return false
@@ -48,7 +59,7 @@ func isPunctuation(pos []string) bool {
 
 func segment(tokens []tokenizer.Token) []Word {
 	words := make([]Word, 0)
-	word := make([]JSONToken, 0)
+	word := Word{}
 	for _, token := range tokens {
 		if token.Class == tokenizer.DUMMY { // BOS and EOS
 			continue
@@ -61,27 +72,30 @@ func segment(tokens []tokenizer.Token) []Word {
 		// add current word to words and start a new word
 		if isPunctuation(jToken.POS) {
 			// Finish adding word in progress, if any
-			if len(word) > 0 {
+			if len(word.Tokens) > 0 {
+				word = getSurface(word)
 				words = append(words, word)
 			}
 			// Add punctuation as its own word
-			words = append(words, []JSONToken{jToken})
+			words = append(words, getSurface(Word{Tokens: []JSONToken{jToken}}))
 			// Start a new word
-			word = make([]JSONToken, 0)
+			word = Word{}
 		} else if jToken.Surface == jToken.Base {
 			// Add ending to current word
-			word = append(word, jToken)
+			word.Tokens = append(word.Tokens, jToken)
 			// Add current word
+			word = getSurface(word)
 			words = append(words, word)
 			// Start a new word
-			word = make([]JSONToken, 0)
+			word = Word{}
 		} else {
 			// We aren't finished - add token to current word
-			word = append(word, jToken)
+			word.Tokens = append(word.Tokens, jToken)
 		}
 	}
 	// Finish up word in progress, if any
-	if len(word) > 0 {
+	if len(word.Tokens) > 0 {
+		word = getSurface(word)
 		words = append(words, word)
 	}
 	return words
