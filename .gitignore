@@ -15,3 +15,4 @@
 notes
 node_modules
 /tmp
+server/tmp/runner-build
