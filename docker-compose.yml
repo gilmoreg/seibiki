@@ -1,18 +1,6 @@
 version: "3"
 
 services:
-  db:
-    image: postgres:10.6-alpine
-    ports:
-      - 5432:5432
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-      - ./data/sql:/docker-entrypoint-initdb.d
-    environment:
-      - POSTGRES_DB=jedict
-      - POSTGRES_USER=jedictuser
-      - POSTGRES_PASSWORD=p@ssw0rd
-  
   cache:
     image: redis:3.2.12-alpine
     ports:
@@ -31,9 +19,7 @@ services:
     env_file:
       - ./.env
     depends_on:
-      - db
       - cache
 
 volumes:
-  pgdata:
   redis-data:
