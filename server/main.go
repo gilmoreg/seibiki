@@ -14,7 +14,7 @@ type postBody struct {
 	Query string `json:"query"`
 }
 
-func handler(rw http.ResponseWriter, r *http.Request) {
+func (s *server) handler(rw http.ResponseWriter, r *http.Request) {
 	var body postBody
 	json.NewDecoder(r.Body).Decode(&body)
 	if body.Query == "" {
@@ -23,8 +23,13 @@ func handler(rw http.ResponseWriter, r *http.Request) {
 		return
 	}
 	query := body.Query
-	tokens := Tokenize(query)
-	j, err := json.Marshal(tokens)
+	words := Tokenize(query)
+	result := make([]Word, 0)
+	for _, word := range words {
+		result = append(result, word.GetEntries(s.dictionary))
+	}
+	j, err := json.Marshal(result)
+	fmt.Println(words)
 	if err != nil {
 		fmt.Println(err)
 		http.Error(rw, http.StatusText(500), 500)
@@ -34,9 +39,23 @@ func handler(rw http.ResponseWriter, r *http.Request) {
 	rw.Write(j)
 }
 
+type server struct {
+	dictionary DictionaryRepository
+	router     *mux.Router
+}
+
+func (s *server) routes() {
+	s.router.HandleFunc("/", s.handler).Methods("POST")
+}
+
 func main() {
 	r := mux.NewRouter()
-	r.HandleFunc("/", handler).Methods("POST")
-	loggedRouter := handlers.LoggingHandler(os.Stdout, r)
+	m := MongoDBRepository{}.New(os.Getenv("MONGODB_CONNECTION_STRING"))
+	s := server{
+		router:     r,
+		dictionary: m,
+	}
+	s.routes()
+	loggedRouter := handlers.LoggingHandler(os.Stdout, s.router)
 	http.ListenAndServe(":3000", loggedRouter)
 }

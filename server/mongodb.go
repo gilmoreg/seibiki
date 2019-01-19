@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"unicode"
 
@@ -21,7 +22,7 @@ type Entry struct {
 
 // DictionaryRepository - repository for dictionary
 type DictionaryRepository interface {
-	Lookup(query string) Entry
+	Lookup(query string) []Entry
 }
 
 // MongoDBRepository - DictionaryRepository for MongoDB
@@ -37,11 +38,14 @@ func (m MongoDBRepository) New(connectionString string) MongoDBRepository {
 		log.Fatal(err)
 	}
 
+	fmt.Println("Database connected. Testing connection...")
+
 	// Check the connection
 	err = client.Ping(context.TODO(), nil)
 	if err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println("Test successful. Database connected.")
 
 	m.client = client
 	m.collection = client.Database("jedict").Collection("entries")
@@ -50,7 +54,7 @@ func (m MongoDBRepository) New(connectionString string) MongoDBRepository {
 }
 
 // Lookup - perform a dictionary lookup
-func (m MongoDBRepository) Lookup(query string) []*Entry {
+func (m MongoDBRepository) Lookup(query string) []Entry {
 	pipeline := bson.M{
 		"$or": bson.A{
 			bson.M{"readings": query},
@@ -58,7 +62,7 @@ func (m MongoDBRepository) Lookup(query string) []*Entry {
 		},
 	}
 	options := options.Find()
-	var results []*Entry
+	var results []Entry
 	cur, err := m.collection.Find(context.TODO(), pipeline, options)
 	defer cur.Close(context.TODO())
 	if err != nil {
@@ -72,7 +76,7 @@ func (m MongoDBRepository) Lookup(query string) []*Entry {
 			log.Fatal(err)
 		}
 
-		results = append(results, &elem)
+		results = append(results, elem)
 	}
 	return results
 }
