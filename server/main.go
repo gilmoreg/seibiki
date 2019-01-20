@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"os"
 
@@ -19,7 +18,7 @@ func (s *server) handler(rw http.ResponseWriter, r *http.Request) {
 	var body postBody
 	json.NewDecoder(r.Body).Decode(&body)
 	if body.Query == "" {
-		fmt.Println("could not decode post body")
+		s.logger.Error("could not decode post body")
 		http.Error(rw, http.StatusText(500), 500)
 		return
 	}
@@ -31,7 +30,7 @@ func (s *server) handler(rw http.ResponseWriter, r *http.Request) {
 	}
 	j, err := json.Marshal(result)
 	if err != nil {
-		fmt.Println(err)
+		s.logger.Error(err)
 		http.Error(rw, http.StatusText(500), 500)
 		return
 	}
@@ -53,7 +52,7 @@ func main() {
 	l := zap.NewExample().Sugar()
 	defer l.Sync()
 	r := mux.NewRouter()
-	c := NewRedisClient()
+	c := NewRedisClient(l)
 	m := MongoDBRepository{
 		cache:  c,
 		logger: l,

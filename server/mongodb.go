@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"log"
 
 	"github.com/mongodb/mongo-go-driver/bson"
@@ -41,14 +40,14 @@ func (m MongoDBRepository) Connect(connectionString string) {
 		log.Fatal(err)
 	}
 
-	fmt.Println("Database connected. Testing connection...")
+	m.logger.Info("Database connected. Testing connection...")
 
 	// Check the connection
 	err = client.Ping(context.TODO(), nil)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("Test successful. Database connected.")
+	m.logger.Info("Test successful. Database connected.")
 
 	m.client = client
 	m.collection = client.Database("jedict").Collection("entries")

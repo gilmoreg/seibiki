@@ -2,11 +2,11 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"time"
 
 	"github.com/gomodule/redigo/redis"
+	"go.uber.org/zap"
 )
 
 // CacheClient - interface for cache client
@@ -18,11 +18,12 @@ type CacheClient interface {
 
 // RedisClient - Redis cache client and wrappers
 type RedisClient struct {
-	pool *redis.Pool
+	logger *zap.SugaredLogger
+	pool   *redis.Pool
 }
 
 // NewRedisClient - return new RedisClient
-func NewRedisClient() RedisClient {
+func NewRedisClient(l *zap.SugaredLogger) RedisClient {
 	p := &redis.Pool{
 		MaxIdle:     3,
 		IdleTimeout: 240 * time.Second,
@@ -39,8 +40,8 @@ func NewRedisClient() RedisClient {
 		},
 	}
 
-	fmt.Println("Redis cache connected")
-	return RedisClient{pool: p}
+	l.Info("Redis cache connected")
+	return RedisClient{pool: p, logger: l}
 }
 
 // Ping - ping server
@@ -50,7 +51,8 @@ func (c RedisClient) Ping() error {
 
 	_, err := redis.String(conn.Do("PING"))
 	if err != nil {
-		return fmt.Errorf("cannot 'PING' db: %v", err)
+		c.logger.Errorf("cannot 'PING' db: %v", err)
+		return err
 	}
 	return nil
 }
@@ -62,7 +64,8 @@ func (c RedisClient) Exists(key string) (bool, error) {
 
 	ok, err := redis.Bool(conn.Do("EXISTS", key))
 	if err != nil {
-		return ok, fmt.Errorf("error checking if key %s exists: %v", key, err)
+		c.logger.Errorf("error checking if key %s exists: %v", key, err)
+		return ok, err
 	}
 	return ok, err
 }
@@ -75,7 +78,8 @@ func (c RedisClient) Get(key string) ([]byte, error) {
 	var data []byte
 	data, err := redis.Bytes(conn.Do("GET", key))
 	if err != nil {
-		return data, fmt.Errorf("error getting key %s: %v", key, err)
+		c.logger.Errorf("error getting key %s: %v", key, err)
+		return data, err
 	}
 	return data, err
 }
@@ -91,7 +95,8 @@ func (c RedisClient) Set(key string, value []byte) error {
 		if len(v) > 15 {
 			v = v[0:12] + "..."
 		}
-		return fmt.Errorf("error setting key %s to %s: %v", key, v, err)
+		c.logger.Errorf("error setting key %s to %s: %v", key, v, err)
+		return err
 	}
 	return err
 }
