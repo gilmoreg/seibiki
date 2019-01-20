@@ -2,9 +2,9 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
-	"unicode"
 
 	"github.com/mongodb/mongo-go-driver/bson"
 	"github.com/mongodb/mongo-go-driver/mongo"
@@ -27,12 +27,13 @@ type DictionaryRepository interface {
 
 // MongoDBRepository - DictionaryRepository for MongoDB
 type MongoDBRepository struct {
+	cache      CacheClient
 	client     *mongo.Client
 	collection *mongo.Collection
 }
 
 // New - creat new MongoDBRepository
-func (m MongoDBRepository) New(connectionString string) MongoDBRepository {
+func (m MongoDBRepository) New(connectionString string, cc CacheClient) MongoDBRepository {
 	client, err := mongo.Connect(context.TODO(), connectionString)
 	if err != nil {
 		log.Fatal(err)
@@ -49,12 +50,44 @@ func (m MongoDBRepository) New(connectionString string) MongoDBRepository {
 
 	m.client = client
 	m.collection = client.Database("jedict").Collection("entries")
-
+	m.cache = cc
 	return m
+}
+
+func (m MongoDBRepository) cacheLookup(query string) (bool, []Entry, error) {
+	ok, err := m.cache.Exists(query)
+	if err != nil {
+		return false, nil, err
+	}
+	if !ok {
+		return false, nil, nil
+	}
+	var entries []Entry
+	err = m.cache.GetParsed(query, entries)
+	return true, entries, err
+}
+
+func (m MongoDBRepository) cacheFill(query string, entries []Entry) {
+	bytes, err := json.Marshal(&entries)
+	if err != nil {
+		log.Fatal(err)
+	}
+	err = m.cache.Set(query, bytes)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 // Lookup - perform a dictionary lookup
 func (m MongoDBRepository) Lookup(query string) []Entry {
+	ok, entries, err := m.cacheLookup(query)
+	if err != nil {
+		log.Fatal(err)
+	}
+	if ok {
+		return entries
+	}
+
 	pipeline := bson.M{
 		"$or": bson.A{
 			bson.M{"readings": query},
@@ -78,24 +111,6 @@ func (m MongoDBRepository) Lookup(query string) []Entry {
 
 		results = append(results, elem)
 	}
+	defer m.cacheFill(query, results)
 	return results
-}
-
-func kanjiOnly(s string) bool {
-	for _, r := range s {
-		if !unicode.In(r, unicode.Ideographic) {
-			return false
-		}
-	}
-	return s != ""
-}
-
-// might be unicode.Unified_Ideograph
-func kanaOnly(s string) bool {
-	for _, r := range s {
-		if !unicode.In(r, unicode.Ideographic) {
-			return false
-		}
-	}
-	return s != ""
 }

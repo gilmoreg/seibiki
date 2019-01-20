@@ -29,7 +29,6 @@ func (s *server) handler(rw http.ResponseWriter, r *http.Request) {
 		result = append(result, word.GetEntries(s.dictionary))
 	}
 	j, err := json.Marshal(result)
-	fmt.Println(words)
 	if err != nil {
 		fmt.Println(err)
 		http.Error(rw, http.StatusText(500), 500)
@@ -50,7 +49,8 @@ func (s *server) routes() {
 
 func main() {
 	r := mux.NewRouter()
-	m := MongoDBRepository{}.New(os.Getenv("MONGODB_CONNECTION_STRING"))
+	c := NewRedisClient()
+	m := MongoDBRepository{}.New(os.Getenv("MONGODB_CONNECTION_STRING"), c)
 	s := server{
 		router:     r,
 		dictionary: m,
