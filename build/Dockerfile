@@ -1,3 +1,15 @@
-FROM golang:1.11.4-alpine3.7
-RUN mkdir /app
-WORKDIR /app
+FROM golang:1.11.4-alpine3.7 AS builder
+RUN apk update && apk add --no-cache git \
+    && mkdir -p /go/bin
+
+COPY ./server/go.* $GOPATH/src/seibiki/
+WORKDIR $GOPATH/src/seibiki
+RUN GO111MODULE=on go mod download
+
+COPY ./server $GOPATH/src/seibiki
+RUN GO111MODULE=on CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -ldflags="-w -s" -o /go/bin/app
+
+FROM scratch
+COPY --from=builder /go/bin/app /go/bin/app
+EXPOSE 3000
+ENTRYPOINT ["/go/bin/app"]

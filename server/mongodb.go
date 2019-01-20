@@ -9,6 +9,7 @@ import (
 	"github.com/mongodb/mongo-go-driver/bson"
 	"github.com/mongodb/mongo-go-driver/mongo"
 	"github.com/mongodb/mongo-go-driver/mongo/options"
+	"go.uber.org/zap"
 )
 
 // Entry - dictionary entry
@@ -30,10 +31,11 @@ type MongoDBRepository struct {
 	cache      CacheClient
 	client     *mongo.Client
 	collection *mongo.Collection
+	logger     *zap.SugaredLogger
 }
 
 // New - creat new MongoDBRepository
-func (m MongoDBRepository) New(connectionString string, cc CacheClient) MongoDBRepository {
+func (m MongoDBRepository) New(connectionString string, cc CacheClient, l *zap.SugaredLogger) MongoDBRepository {
 	client, err := mongo.Connect(context.TODO(), connectionString)
 	if err != nil {
 		log.Fatal(err)
@@ -51,20 +53,29 @@ func (m MongoDBRepository) New(connectionString string, cc CacheClient) MongoDBR
 	m.client = client
 	m.collection = client.Database("jedict").Collection("entries")
 	m.cache = cc
+	m.logger = l
 	return m
 }
 
 func (m MongoDBRepository) cacheLookup(query string) (bool, []Entry, error) {
+	m.logger.Infof("Checking cache for %s", query)
 	ok, err := m.cache.Exists(query)
 	if err != nil {
 		return false, nil, err
 	}
 	if !ok {
+		m.logger.Infof("%s does not exist in cache", query)
 		return false, nil, nil
 	}
+	m.logger.Infof("%s exists in cache. Fetching...", query)
+	data, err := m.cache.Get(query)
+	if err != nil {
+		return false, nil, err
+	}
 	var entries []Entry
-	err = m.cache.GetParsed(query, entries)
-	return true, entries, err
+	err = json.Unmarshal(data, &entries)
+	m.logger.Infof("fetched %s", query)
+	return false, entries, err
 }
 
 func (m MongoDBRepository) cacheFill(query string, entries []Entry) {
@@ -72,6 +83,7 @@ func (m MongoDBRepository) cacheFill(query string, entries []Entry) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	m.logger.Infof("setting %s in cache", query)
 	err = m.cache.Set(query, bytes)
 	if err != nil {
 		log.Fatal(err)

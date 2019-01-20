@@ -2,7 +2,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"os"
 	"time"
@@ -14,7 +13,6 @@ import (
 type CacheClient interface {
 	Exists(key string) (bool, error)
 	Get(key string) ([]byte, error)
-	GetParsed(key string, result interface{}) error
 	Set(key string, value []byte) error
 }
 
@@ -80,15 +78,6 @@ func (c RedisClient) Get(key string) ([]byte, error) {
 		return data, fmt.Errorf("error getting key %s: %v", key, err)
 	}
 	return data, err
-}
-
-// GetParsed - get item from Redis and parse it
-func (c RedisClient) GetParsed(key string, result interface{}) error {
-	data, err := c.Get(key)
-	if err != nil {
-		return err
-	}
-	return json.Unmarshal(data, &result)
 }
 
 // Set - set in Redis

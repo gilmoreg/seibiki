@@ -11,9 +11,9 @@ services:
   seibiki:
     build:
       context: .
-      dockerfile: ./build/Dockerfile.development
-    volumes:
-      - ./server:/app
+      dockerfile: ./build/Dockerfile
+    # volumes:
+    #   - ./server:/app
     ports:
       - 3000:3000
     env_file:

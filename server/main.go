@@ -8,6 +8,7 @@ import (
 
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
+	"go.uber.org/zap"
 )
 
 type postBody struct {
@@ -41,6 +42,7 @@ func (s *server) handler(rw http.ResponseWriter, r *http.Request) {
 type server struct {
 	dictionary DictionaryRepository
 	router     *mux.Router
+	logger     *zap.SugaredLogger
 }
 
 func (s *server) routes() {
@@ -48,12 +50,15 @@ func (s *server) routes() {
 }
 
 func main() {
+	l := zap.NewExample().Sugar()
+	defer l.Sync()
 	r := mux.NewRouter()
 	c := NewRedisClient()
-	m := MongoDBRepository{}.New(os.Getenv("MONGODB_CONNECTION_STRING"), c)
+	m := MongoDBRepository{}.New(os.Getenv("MONGODB_CONNECTION_STRING"), c, l)
 	s := server{
 		router:     r,
 		dictionary: m,
+		logger:     l,
 	}
 	s.routes()
 	loggedRouter := handlers.LoggingHandler(os.Stdout, s.router)
