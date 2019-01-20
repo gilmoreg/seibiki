@@ -54,7 +54,11 @@ func main() {
 	defer l.Sync()
 	r := mux.NewRouter()
 	c := NewRedisClient()
-	m := MongoDBRepository{}.New(os.Getenv("MONGODB_CONNECTION_STRING"), c, l)
+	m := MongoDBRepository{
+		cache:  c,
+		logger: l,
+	}
+	m.Connect(os.Getenv("MONGODB_CONNECTION_STRING"))
 	s := server{
 		router:     r,
 		dictionary: m,

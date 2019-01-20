@@ -34,8 +34,8 @@ type MongoDBRepository struct {
 	logger     *zap.SugaredLogger
 }
 
-// New - creat new MongoDBRepository
-func (m MongoDBRepository) New(connectionString string, cc CacheClient, l *zap.SugaredLogger) MongoDBRepository {
+// Connect - connect to database
+func (m MongoDBRepository) Connect(connectionString string) {
 	client, err := mongo.Connect(context.TODO(), connectionString)
 	if err != nil {
 		log.Fatal(err)
@@ -52,9 +52,6 @@ func (m MongoDBRepository) New(connectionString string, cc CacheClient, l *zap.S
 
 	m.client = client
 	m.collection = client.Database("jedict").Collection("entries")
-	m.cache = cc
-	m.logger = l
-	return m
 }
 
 func (m MongoDBRepository) cacheLookup(query string) (bool, []Entry, error) {
