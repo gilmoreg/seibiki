@@ -1,0 +1,198 @@
+[
+    {
+        "surface": "デジカメを",
+        "entries": null,
+        "tokens": [
+            {
+                "id": 36,
+                "class": "UNKNOWN",
+                "surface": "デジカメ",
+                "pos": [
+                    "名詞",
+                    "一般",
+                    "*",
+                    "*",
+                    "*"
+                ],
+                "base": "*",
+                "reading": "",
+                "pron": "",
+                "entries": null
+            },
+            {
+                "id": 80580,
+                "class": "KNOWN",
+                "surface": "を",
+                "pos": [
+                    "助詞",
+                    "格助詞",
+                    "一般",
+                    "*",
+                    "*"
+                ],
+                "base": "を",
+                "reading": "ヲ",
+                "pron": "ヲ",
+                "entries": [
+                    {
+                        "sequence": 2029010,
+                        "kanji": [],
+                        "readings": [
+                            "を"
+                        ],
+                        "meanings": [
+                            "indicates direct object of action",
+                            "indicates subject of causative expression",
+                            "indicates an area traversed",
+                            "indicates time (period) over which action takes place",
+                            "indicates point of departure or separation of action",
+                            "indicates object of desire, like, hate, etc."
+                        ],
+                        "partofspeech": "particle"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "surface": "買った",
+        "entries": null,
+        "tokens": [
+            {
+                "id": 353103,
+                "class": "KNOWN",
+                "surface": "買っ",
+                "pos": [
+                    "動詞",
+                    "自立",
+                    "*",
+                    "*",
+                    "五段・ワ行促音便"
+                ],
+                "base": "買う",
+                "reading": "カッ",
+                "pron": "カッ",
+                "entries": [
+                    {
+                        "sequence": 1473740,
+                        "kanji": [
+                            "買う"
+                        ],
+                        "readings": [
+                            "かう"
+                        ],
+                        "meanings": [
+                            "to buy",
+                            "to purchase",
+                            "to value",
+                            "to have a high opinion",
+                            "to stir",
+                            "to provoke",
+                            "to draw upon oneself"
+                        ],
+                        "partofspeech": "transitive verb"
+                    }
+                ]
+            },
+            {
+                "id": 39233,
+                "class": "KNOWN",
+                "surface": "た",
+                "pos": [
+                    "助動詞",
+                    "*",
+                    "*",
+                    "*",
+                    "特殊・タ"
+                ],
+                "base": "た",
+                "reading": "タ",
+                "pron": "タ",
+                "entries": [
+                    {
+                        "sequence": 1407450,
+                        "kanji": [
+                            "多"
+                        ],
+                        "readings": [
+                            "た"
+                        ],
+                        "meanings": [
+                            "multi-"
+                        ],
+                        "partofspeech": "prefix"
+                    },
+                    {
+                        "sequence": 1416830,
+                        "kanji": [
+                            "誰"
+                        ],
+                        "readings": [
+                            "だれ",
+                            "たれ",
+                            "た"
+                        ],
+                        "meanings": [
+                            "who"
+                        ],
+                        "partofspeech": "pronoun"
+                    },
+                    {
+                        "sequence": 1442730,
+                        "kanji": [
+                            "田"
+                        ],
+                        "readings": [
+                            "た"
+                        ],
+                        "meanings": [
+                            "rice field"
+                        ],
+                        "partofspeech": "noun (common) (futsuumeishi)"
+                    },
+                    {
+                        "sequence": 1949190,
+                        "kanji": [
+                            "他"
+                        ],
+                        "readings": [
+                            "た"
+                        ],
+                        "meanings": [
+                            "other (esp. people and abstract matters)"
+                        ],
+                        "partofspeech": "&adj-no;"
+                    },
+                    {
+                        "sequence": 2654250,
+                        "kanji": [],
+                        "readings": [
+                            "た"
+                        ],
+                        "meanings": [
+                            "did",
+                            "(have) done",
+                            "(please) do"
+                        ],
+                        "partofspeech": "&aux-v;"
+                    },
+                    {
+                        "sequence": 2243700,
+                        "kanji": [
+                            "咫",
+                            "尺"
+                        ],
+                        "readings": [
+                            "あた",
+                            "た"
+                        ],
+                        "meanings": [
+                            "distance between outstretched thumb and middle finger (approx. 18 cm)"
+                        ],
+                        "partofspeech": "counter"
+                    }
+                ]
+            }
+        ]
+    }
+]

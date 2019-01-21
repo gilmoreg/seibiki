@@ -1,61 +1,64 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"os"
 	"testing"
+
+	"github.com/google/go-cmp/cmp"
 )
 
-type MockDictionaryRepository struct{}
+type MockDictionaryRepository struct {
+	entries map[string][]Entry
+}
+
+func NewMockDictRepo(filename string) MockDictionaryRepository {
+	jsonFile, _ := os.Open(filename)
+	defer jsonFile.Close()
+	byteValue, _ := ioutil.ReadAll(jsonFile)
+
+	var result = MockDictionaryRepository{}
+	json.Unmarshal([]byte(byteValue), &result.entries)
+	return result
+}
 
 func (m MockDictionaryRepository) Lookup(query string) []Entry {
-	kanji := ""
-	meaning := ""
-	reading := ""
-	switch query {
-	case "とても":
-		reading = "とても"
-	case "です":
-		reading = "です"
-		meaning = "to be"
-	case "良かった":
-		return make([]Entry, 0)
-	case "良い":
-		reading = "よい"
-		meaning = "good"
-		kanji = "良い"
-	}
-	entry := Entry{
-		Sequence:     1,
-		Kanji:        []string{kanji},
-		Meanings:     []string{meaning},
-		Readings:     []string{reading},
-		PartOfSpeech: "",
-	}
-	return []Entry{entry}
+	return m.entries[query]
 }
 
 func TestTokenize(t *testing.T) {
-	words := Tokenize("とても良かったです。")
-	if len(words) < 4 {
-		t.Fatal("Not enough words")
+	tt := []struct {
+		query    string
+		expected string
+	}{
+		{query: "とても良かったです。", expected: "../test/testdata/example1.json"},
+		{query: "すもももももももものうち", expected: "../test/testdata/example2.json"},
+		{query: "デジカメを買った", expected: "../test/testdata/example3.json"},
 	}
-	if len(words[1].Tokens) != 2 {
-		t.Fatal("良かった should be split into two tokens")
-	}
-	if words[2].Surface != "です" {
-		t.Fatal("Surface must be computed and be accurate")
-	}
-	if !words[3].IsPunctuation() {
-		t.Fatal("Fourth word must be punctuation")
-	}
-	mockRepo := MockDictionaryRepository{}
-	result := make([]Word, 0)
-	for _, word := range words {
-		result = append(result, word.GetEntries(mockRepo))
-	}
-	if result[0].Entries[0].Readings[0] != "とても" {
-		t.Fatal("とても should have an accurate root entry")
-	}
-	if result[1].Tokens[0].Entries[0].Meanings[0] != "good" {
-		t.Fatal("良かった should have accurate entries on tokens")
+
+	mockRepo := NewMockDictRepo("../test/testdata/entries.json")
+
+	for _, tc := range tt {
+		t.Run(tc.query, func(t *testing.T) {
+			words := Tokenize(tc.query)
+			wordsEntries := make([]Word, 0)
+			for _, word := range words {
+				wordsEntries = append(wordsEntries, word.GetEntries(mockRepo))
+			}
+			jsonFile, _ := os.Open(tc.expected)
+			defer jsonFile.Close()
+			byteValue, _ := ioutil.ReadAll(jsonFile)
+
+			var result []Word
+			json.Unmarshal([]byte(byteValue), &result)
+			if !cmp.Equal(wordsEntries, result) {
+				fmt.Println(wordsEntries)
+				fmt.Println("")
+				fmt.Println(result)
+				t.Fatal("Output did not match expected results")
+			}
+		})
 	}
 }

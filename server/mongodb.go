@@ -33,7 +33,7 @@ type MongoDBRepository struct {
 }
 
 // Connect - connect to database
-func (m MongoDBRepository) Connect(connectionString string) {
+func (m *MongoDBRepository) Connect(connectionString string) {
 	client, err := mongo.Connect(context.TODO(), connectionString)
 	if err != nil {
 		log.Fatal(err)
@@ -51,7 +51,7 @@ func (m MongoDBRepository) Connect(connectionString string) {
 	m.logger.Info("Test successful. Database connected.")
 }
 
-func (m MongoDBRepository) cacheLookup(query string) (bool, []Entry, error) {
+func (m *MongoDBRepository) cacheLookup(query string) (bool, []Entry, error) {
 	m.logger.Infof("Checking cache for %s", query)
 	ok, err := m.cache.Exists(query)
 	if err != nil {
@@ -68,11 +68,14 @@ func (m MongoDBRepository) cacheLookup(query string) (bool, []Entry, error) {
 	}
 	var entries []Entry
 	err = json.Unmarshal(data, &entries)
+	if err != nil {
+		return false, nil, err
+	}
 	m.logger.Infof("fetched %s", query)
-	return false, entries, err
+	return true, entries, nil
 }
 
-func (m MongoDBRepository) cacheFill(query string, entries []Entry) {
+func (m *MongoDBRepository) cacheFill(query string, entries []Entry) {
 	bytes, err := json.Marshal(&entries)
 	if err != nil {
 		log.Fatal(err)
@@ -85,7 +88,7 @@ func (m MongoDBRepository) cacheFill(query string, entries []Entry) {
 }
 
 // Lookup - perform a dictionary lookup
-func (m MongoDBRepository) Lookup(query string) []Entry {
+func (m *MongoDBRepository) Lookup(query string) []Entry {
 	ok, entries, err := m.cacheLookup(query)
 	if err != nil {
 		log.Fatal(err)
