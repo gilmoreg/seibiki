@@ -27,10 +27,9 @@ type DictionaryRepository interface {
 
 // MongoDBRepository - DictionaryRepository for MongoDB
 type MongoDBRepository struct {
-	cache      CacheClient
-	client     *mongo.Client
-	collection *mongo.Collection
-	logger     *zap.SugaredLogger
+	cache  CacheClient
+	client *mongo.Client
+	logger *zap.SugaredLogger
 }
 
 // Connect - connect to database
@@ -47,10 +46,9 @@ func (m MongoDBRepository) Connect(connectionString string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	m.logger.Info("Test successful. Database connected.")
 
 	m.client = client
-	m.collection = client.Database("jedict").Collection("entries")
+	m.logger.Info("Test successful. Database connected.")
 }
 
 func (m MongoDBRepository) cacheLookup(query string) (bool, []Entry, error) {
@@ -102,19 +100,20 @@ func (m MongoDBRepository) Lookup(query string) []Entry {
 			bson.M{"kanji": query},
 		},
 	}
-	options := options.Find()
 	var results []Entry
-	cur, err := m.collection.Find(context.TODO(), pipeline, options)
+	cur, err := m.client.Database("jedict").Collection("entries").Find(context.TODO(), pipeline, options.Find())
 	defer cur.Close(context.TODO())
 	if err != nil {
-		log.Fatal(err)
+		m.logger.Error(err)
+		return make([]Entry, 0)
 	}
 
 	for cur.Next(context.TODO()) {
 		var elem Entry
 		err := cur.Decode(&elem)
 		if err != nil {
-			log.Fatal(err)
+			m.logger.Error(err)
+			continue
 		}
 
 		results = append(results, elem)
