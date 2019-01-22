@@ -10,7 +10,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func (s *server) handler(rw http.ResponseWriter, r *http.Request) {
+func (s *Server) handler(rw http.ResponseWriter, r *http.Request) {
 	query := r.FormValue("query")
 	if query == "" {
 		http.Error(rw, "Must supply a query", 400)
@@ -31,13 +31,15 @@ func (s *server) handler(rw http.ResponseWriter, r *http.Request) {
 	rw.Write(j)
 }
 
-type server struct {
+// Server - holds deps for injection
+type Server struct {
 	dictionary DictionaryRepository
 	router     *mux.Router
 	logger     *zap.SugaredLogger
 }
 
-func (s *server) routes() {
+// Routes - add route
+func (s *Server) Routes() {
 	s.router.HandleFunc("/", s.handler).Methods("POST")
 }
 
@@ -51,12 +53,12 @@ func main() {
 		logger: l,
 	}
 	m.Connect(os.Getenv("MONGODB_CONNECTION_STRING"))
-	s := server{
+	s := Server{
 		router:     r,
 		dictionary: m,
 		logger:     l,
 	}
-	s.routes()
+	s.Routes()
 	loggedRouter := handlers.LoggingHandler(os.Stdout, s.router)
 	http.ListenAndServe(":3000", loggedRouter)
 }

@@ -4,10 +4,15 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"net/http"
+	"net/http/httptest"
+	"net/url"
 	"os"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
+	"github.com/gorilla/mux"
+	"go.uber.org/zap"
 )
 
 type MockDictionaryRepository struct {
@@ -28,7 +33,7 @@ func (m MockDictionaryRepository) Lookup(query string) []Entry {
 	return m.entries[query]
 }
 
-func TestTokenize(t *testing.T) {
+func TestIntegration(t *testing.T) {
 	tt := []struct {
 		query    string
 		expected string
@@ -39,22 +44,33 @@ func TestTokenize(t *testing.T) {
 	}
 
 	mockRepo := NewMockDictRepo("../test/testdata/entries.json")
+	mockServer := Server{
+		dictionary: mockRepo,
+		router:     mux.NewRouter(),
+		logger:     zap.NewExample().Sugar(),
+	}
+	mockServer.Routes()
 
 	for _, tc := range tt {
 		t.Run(tc.query, func(t *testing.T) {
-			words := Tokenize(tc.query)
-			wordsEntries := make([]Word, 0)
-			for _, word := range words {
-				wordsEntries = append(wordsEntries, word.GetEntries(mockRepo))
+			server := httptest.NewServer(mockServer.router)
+			defer server.Close()
+			data := url.Values{}
+			data.Set("query", tc.query)
+			formData := url.Values{
+				"query": {tc.query},
 			}
+			resp, _ := http.PostForm(server.URL, formData)
+			var words []Word
+			json.NewDecoder(resp.Body).Decode(&words)
+
 			jsonFile, _ := os.Open(tc.expected)
 			defer jsonFile.Close()
 			byteValue, _ := ioutil.ReadAll(jsonFile)
-
 			var result []Word
 			json.Unmarshal([]byte(byteValue), &result)
-			if !cmp.Equal(wordsEntries, result) {
-				fmt.Println(wordsEntries)
+			if !cmp.Equal(words, result) {
+				fmt.Println(words)
 				fmt.Println("")
 				fmt.Println(result)
 				t.Fatal("Output did not match expected results")
