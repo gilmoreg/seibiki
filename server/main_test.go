@@ -60,7 +60,7 @@ func TestIntegration(t *testing.T) {
 			formData := url.Values{
 				"query": {tc.query},
 			}
-			resp, _ := http.PostForm(server.URL, formData)
+			resp, _ := http.PostForm(server.URL+"/api/lookup", formData)
 			var words []Word
 			json.NewDecoder(resp.Body).Decode(&words)
 

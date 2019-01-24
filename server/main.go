@@ -40,7 +40,17 @@ type Server struct {
 
 // Routes - add route
 func (s *Server) Routes() {
-	s.router.HandleFunc("/", s.handler).Methods("POST")
+	s.router.HandleFunc("/api/lookup", s.handler).Methods("POST")
+	s.router.
+		PathPrefix("/static/js/").
+		Handler(http.StripPrefix("/static/js/", http.FileServer(http.Dir("/go/bin/wwwroot/static/js/"))))
+	s.router.
+		PathPrefix("/static/css/").
+		Handler(http.StripPrefix("/static/css/", http.FileServer(http.Dir("/go/bin/wwwroot/static/css/"))))
+	s.router.
+		PathPrefix("/static/media/").
+		Handler(http.StripPrefix("/static/media/", http.FileServer(http.Dir("/go/bin/wwwroot/static/media/"))))
+	s.router.Handle("/", http.FileServer(http.Dir("/go/bin/wwwroot/")))
 }
 
 func main() {
