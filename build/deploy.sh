@@ -8,5 +8,6 @@ then
 fi
 wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 docker login -u=$DOCKER_USERNAME -p=$HEROKU_API_KEY registry.heroku.com
-heroku container:push web --app seibiki
+docker build -t --file ./build/Dockerfile 
+heroku container:push web --recursive --app seibiki
 heroku container:release web --app seibiki
