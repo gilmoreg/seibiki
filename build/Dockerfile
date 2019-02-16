@@ -17,8 +17,8 @@ RUN npm install
 COPY ./web/ /app
 RUN npm run build
 
-FROM scratch
+FROM alpine:3.7
 COPY --from=builder /go/bin/app /go/bin/app
 COPY --from=uibuilder /app/build /go/bin/wwwroot
 EXPOSE 3000
-ENTRYPOINT ["/go/bin/app"]
+CMD ["/go/bin/app"]

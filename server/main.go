@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"os"
 
@@ -70,5 +71,7 @@ func main() {
 	}
 	s.Routes()
 	loggedRouter := handlers.LoggingHandler(os.Stdout, s.router)
-	http.ListenAndServe(":3000", loggedRouter)
+	url := fmt.Sprintf(":%s", os.Getenv("PORT"))
+	l.Info(fmt.Sprintf("starting server at %s", url))
+	http.ListenAndServe(url, loggedRouter)
 }
