@@ -1,0 +1,10 @@
+.Token {
+    outline: 1px solid black;
+    flex-basis: 20em;
+}
+
+.Token ul {
+    list-style: none;
+    text-align: left;
+    padding: 1em;
+}

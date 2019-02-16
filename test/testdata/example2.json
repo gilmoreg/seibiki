@@ -1,0 +1,583 @@
+[
+    {
+        "surface": "すもも",
+        "entries": [
+            {
+                "sequence": 1549830,
+                "kanji": [
+                    "李",
+                    "酸桃"
+                ],
+                "readings": [
+                    "すもも",
+                    "スモモ"
+                ],
+                "meanings": [
+                    "Japanese plum (Prunus salicina)",
+                    "Chinese plum"
+                ],
+                "partofspeech": "noun (common) (futsuumeishi)"
+            }
+        ],
+        "tokens": [
+            {
+                "id": 36163,
+                "class": "KNOWN",
+                "surface": "すもも",
+                "pos": [
+                    "名詞",
+                    "一般",
+                    "*",
+                    "*",
+                    "*"
+                ],
+                "base": "すもも",
+                "reading": "スモモ",
+                "pron": "スモモ",
+                "entries": null
+            }
+        ]
+    },
+    {
+        "surface": "も",
+        "entries": [
+            {
+                "sequence": 1584680,
+                "kanji": [
+                    "面"
+                ],
+                "readings": [
+                    "おもて",
+                    "おも",
+                    "も",
+                    "もて"
+                ],
+                "meanings": [
+                    "face",
+                    "surface",
+                    "mask (esp. a noh or kyogen mask)"
+                ],
+                "partofspeech": "noun (common) (futsuumeishi)"
+            },
+            {
+                "sequence": 1912240,
+                "kanji": [
+                    "裳"
+                ],
+                "readings": [
+                    "も"
+                ],
+                "meanings": [
+                    "ancient skirt"
+                ],
+                "partofspeech": "noun (common) (futsuumeishi)"
+            },
+            {
+                "sequence": 1399250,
+                "kanji": [
+                    "喪"
+                ],
+                "readings": [
+                    "も"
+                ],
+                "meanings": [
+                    "mourning"
+                ],
+                "partofspeech": "&adj-no;"
+            },
+            {
+                "sequence": 1402240,
+                "kanji": [
+                    "藻"
+                ],
+                "readings": [
+                    "も"
+                ],
+                "meanings": [
+                    "algae",
+                    "waterweed",
+                    "seaweed",
+                    "duckweed"
+                ],
+                "partofspeech": "&adj-no;"
+            },
+            {
+                "sequence": 2028940,
+                "kanji": [],
+                "readings": [
+                    "も"
+                ],
+                "meanings": [
+                    "too",
+                    "also",
+                    "in addition",
+                    "as well",
+                    "(not) either (in a negative sentence)",
+                    "both A and B",
+                    "A as well as B",
+                    "neither A nor B (in a negative sentence)",
+                    "even",
+                    "as much as",
+                    "as many as",
+                    "as far as",
+                    "as long as",
+                    "no less than",
+                    "no fewer than",
+                    "even if",
+                    "even though",
+                    "although",
+                    "in spite of",
+                    "further",
+                    "more",
+                    "again",
+                    "another",
+                    "the other"
+                ],
+                "partofspeech": "adverb (fukushi)"
+            }
+        ],
+        "tokens": [
+            {
+                "id": 73244,
+                "class": "KNOWN",
+                "surface": "も",
+                "pos": [
+                    "助詞",
+                    "係助詞",
+                    "*",
+                    "*",
+                    "*"
+                ],
+                "base": "も",
+                "reading": "モ",
+                "pron": "モ",
+                "entries": null
+            }
+        ]
+    },
+    {
+        "surface": "もも",
+        "entries": [
+            {
+                "sequence": 1448290,
+                "kanji": [
+                    "桃"
+                ],
+                "readings": [
+                    "もも",
+                    "モモ"
+                ],
+                "meanings": [
+                    "peach (Prunus persica)"
+                ],
+                "partofspeech": "noun (common) (futsuumeishi)"
+            },
+            {
+                "sequence": 1488000,
+                "kanji": [
+                    "百",
+                    "陌",
+                    "佰"
+                ],
+                "readings": [
+                    "ひゃく",
+                    "もも",
+                    "はく"
+                ],
+                "meanings": [
+                    "100",
+                    "hundred"
+                ],
+                "partofspeech": "numeric"
+            },
+            {
+                "sequence": 1605310,
+                "kanji": [
+                    "股",
+                    "腿"
+                ],
+                "readings": [
+                    "もも"
+                ],
+                "meanings": [
+                    "thigh",
+                    "femoral"
+                ],
+                "partofspeech": "&adj-no;"
+            }
+        ],
+        "tokens": [
+            {
+                "id": 74988,
+                "class": "KNOWN",
+                "surface": "もも",
+                "pos": [
+                    "名詞",
+                    "一般",
+                    "*",
+                    "*",
+                    "*"
+                ],
+                "base": "もも",
+                "reading": "モモ",
+                "pron": "モモ",
+                "entries": null
+            }
+        ]
+    },
+    {
+        "surface": "も",
+        "entries": [
+            {
+                "sequence": 1584680,
+                "kanji": [
+                    "面"
+                ],
+                "readings": [
+                    "おもて",
+                    "おも",
+                    "も",
+                    "もて"
+                ],
+                "meanings": [
+                    "face",
+                    "surface",
+                    "mask (esp. a noh or kyogen mask)"
+                ],
+                "partofspeech": "noun (common) (futsuumeishi)"
+            },
+            {
+                "sequence": 1912240,
+                "kanji": [
+                    "裳"
+                ],
+                "readings": [
+                    "も"
+                ],
+                "meanings": [
+                    "ancient skirt"
+                ],
+                "partofspeech": "noun (common) (futsuumeishi)"
+            },
+            {
+                "sequence": 1399250,
+                "kanji": [
+                    "喪"
+                ],
+                "readings": [
+                    "も"
+                ],
+                "meanings": [
+                    "mourning"
+                ],
+                "partofspeech": "&adj-no;"
+            },
+            {
+                "sequence": 1402240,
+                "kanji": [
+                    "藻"
+                ],
+                "readings": [
+                    "も"
+                ],
+                "meanings": [
+                    "algae",
+                    "waterweed",
+                    "seaweed",
+                    "duckweed"
+                ],
+                "partofspeech": "&adj-no;"
+            },
+            {
+                "sequence": 2028940,
+                "kanji": [],
+                "readings": [
+                    "も"
+                ],
+                "meanings": [
+                    "too",
+                    "also",
+                    "in addition",
+                    "as well",
+                    "(not) either (in a negative sentence)",
+                    "both A and B",
+                    "A as well as B",
+                    "neither A nor B (in a negative sentence)",
+                    "even",
+                    "as much as",
+                    "as many as",
+                    "as far as",
+                    "as long as",
+                    "no less than",
+                    "no fewer than",
+                    "even if",
+                    "even though",
+                    "although",
+                    "in spite of",
+                    "further",
+                    "more",
+                    "again",
+                    "another",
+                    "the other"
+                ],
+                "partofspeech": "adverb (fukushi)"
+            }
+        ],
+        "tokens": [
+            {
+                "id": 73244,
+                "class": "KNOWN",
+                "surface": "も",
+                "pos": [
+                    "助詞",
+                    "係助詞",
+                    "*",
+                    "*",
+                    "*"
+                ],
+                "base": "も",
+                "reading": "モ",
+                "pron": "モ",
+                "entries": null
+            }
+        ]
+    },
+    {
+        "surface": "もも",
+        "entries": [
+            {
+                "sequence": 1448290,
+                "kanji": [
+                    "桃"
+                ],
+                "readings": [
+                    "もも",
+                    "モモ"
+                ],
+                "meanings": [
+                    "peach (Prunus persica)"
+                ],
+                "partofspeech": "noun (common) (futsuumeishi)"
+            },
+            {
+                "sequence": 1488000,
+                "kanji": [
+                    "百",
+                    "陌",
+                    "佰"
+                ],
+                "readings": [
+                    "ひゃく",
+                    "もも",
+                    "はく"
+                ],
+                "meanings": [
+                    "100",
+                    "hundred"
+                ],
+                "partofspeech": "numeric"
+            },
+            {
+                "sequence": 1605310,
+                "kanji": [
+                    "股",
+                    "腿"
+                ],
+                "readings": [
+                    "もも"
+                ],
+                "meanings": [
+                    "thigh",
+                    "femoral"
+                ],
+                "partofspeech": "&adj-no;"
+            }
+        ],
+        "tokens": [
+            {
+                "id": 74988,
+                "class": "KNOWN",
+                "surface": "もも",
+                "pos": [
+                    "名詞",
+                    "一般",
+                    "*",
+                    "*",
+                    "*"
+                ],
+                "base": "もも",
+                "reading": "モモ",
+                "pron": "モモ",
+                "entries": null
+            }
+        ]
+    },
+    {
+        "surface": "の",
+        "entries": [
+            {
+                "sequence": 1537250,
+                "kanji": [
+                    "野",
+                    "埜"
+                ],
+                "readings": [
+                    "の",
+                    "や",
+                    "ぬ"
+                ],
+                "meanings": [
+                    "plain",
+                    "field",
+                    "hidden (structural) member",
+                    "wild",
+                    "lacking a political post"
+                ],
+                "partofspeech": "&n-pref;"
+            },
+            {
+                "sequence": 1469800,
+                "kanji": [],
+                "readings": [
+                    "の"
+                ],
+                "meanings": [
+                    "indicates possessive",
+                    "nominalizes verbs and adjectives",
+                    "substitutes for \"ga\" in subordinate phrases",
+                    "(at sentence-end, falling tone) indicates a confident conclusion",
+                    "(at sentence-end) indicates emotional emphasis",
+                    "(at sentence-end, rising tone) indicates question"
+                ],
+                "partofspeech": "particle"
+            },
+            {
+                "sequence": 2671670,
+                "kanji": [
+                    "幅",
+                    "布"
+                ],
+                "readings": [
+                    "の"
+                ],
+                "meanings": [
+                    "unit of measurement for cloth breadth (30-38 cm)"
+                ],
+                "partofspeech": "counter"
+            },
+            {
+                "sequence": 2578110,
+                "kanji": [
+                    "箆",
+                    "篦"
+                ],
+                "readings": [
+                    "の"
+                ],
+                "meanings": [
+                    "shaft (of an arrow)",
+                    "arrow bamboo (Pseudosasa japonica)"
+                ],
+                "partofspeech": "noun (common) (futsuumeishi)"
+            },
+            {
+                "sequence": 2270030,
+                "kanji": [
+                    "乃",
+                    "之"
+                ],
+                "readings": [
+                    "の"
+                ],
+                "meanings": [
+                    "possessive particle"
+                ],
+                "partofspeech": "particle"
+            }
+        ],
+        "tokens": [
+            {
+                "id": 55829,
+                "class": "KNOWN",
+                "surface": "の",
+                "pos": [
+                    "助詞",
+                    "連体化",
+                    "*",
+                    "*",
+                    "*"
+                ],
+                "base": "の",
+                "reading": "ノ",
+                "pron": "ノ",
+                "entries": null
+            }
+        ]
+    },
+    {
+        "surface": "うち",
+        "entries": [
+            {
+                "sequence": 1191740,
+                "kanji": [
+                    "家"
+                ],
+                "readings": [
+                    "うち",
+                    "ち"
+                ],
+                "meanings": [
+                    "house",
+                    "home (one's own)",
+                    "(one's) family",
+                    "(one's) household"
+                ],
+                "partofspeech": "pronoun"
+            },
+            {
+                "sequence": 1457730,
+                "kanji": [
+                    "内",
+                    "中"
+                ],
+                "readings": [
+                    "うち"
+                ],
+                "meanings": [
+                    "inside",
+                    "within",
+                    "while",
+                    "among",
+                    "amongst",
+                    "between",
+                    "we",
+                    "our",
+                    "my spouse",
+                    "imperial palace grounds",
+                    "emperor",
+                    "I",
+                    "me"
+                ],
+                "partofspeech": "pronoun"
+            }
+        ],
+        "tokens": [
+            {
+                "id": 8027,
+                "class": "KNOWN",
+                "surface": "うち",
+                "pos": [
+                    "名詞",
+                    "非自立",
+                    "副詞可能",
+                    "*",
+                    "*"
+                ],
+                "base": "うち",
+                "reading": "ウチ",
+                "pron": "ウチ",
+                "entries": null
+            }
+        ]
+    }
+]
