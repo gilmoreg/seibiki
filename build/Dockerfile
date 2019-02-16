@@ -13,7 +13,7 @@ FROM node:11.7.0-alpine as uibuilder
 RUN mkdir /app
 WORKDIR /app
 COPY ./web/package.json /app
-RUN npm install --production
+RUN npm install
 COPY ./web/ /app
 RUN npm run build
 
