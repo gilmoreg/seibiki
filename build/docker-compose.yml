@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  cache:
+    image: redis:3.2.12-alpine
+    ports:
+      - 6379:6379
+    volumes:
+      - redis-data:/data
+
+  seibiki:
+    build:
+      context: ..
+      dockerfile: ./build/Dockerfile.development
+    ports:
+      - 3001:3000
+    env_file:
+      - ./.env
+    depends_on:
+      - cache
+
+volumes:
+  redis-data:

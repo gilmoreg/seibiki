@@ -1,0 +1,13 @@
+.Word {
+    outline: 1px solid black;
+}
+
+.Word .entries {
+    display: flex;
+    justify-content: center;
+}
+
+.Word .tokens {
+    display: flex;
+    justify-content: center;
+}

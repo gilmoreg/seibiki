@@ -3,6 +3,7 @@ package main
 
 import (
 	"os"
+	"strings"
 	"time"
 
 	"github.com/gomodule/redigo/redis"
@@ -28,7 +29,9 @@ func NewRedisClient(l *zap.SugaredLogger) RedisClient {
 		MaxIdle:     3,
 		IdleTimeout: 240 * time.Second,
 		Dial: func() (redis.Conn, error) {
-			c, err := redis.Dial("tcp", os.Getenv("REDIS_URL"))
+			redisURL := os.Getenv("REDIS_URL")
+			redisURL = strings.Replace(redisURL, "redis://", "", -1)
+			c, err := redis.Dial("tcp", redisURL)
 			if err != nil {
 				return nil, err
 			}
