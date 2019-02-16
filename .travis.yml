@@ -1,7 +1,6 @@
 language: go
 go:
 - 1.11.x
-- master
 script: cd server && go test -v ./... && cd ..
 services:
 - docker
@@ -9,3 +8,4 @@ after_success: make deploy
 branches:
   only:
       - master
+      - develop
