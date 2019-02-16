@@ -20,5 +20,4 @@ RUN npm run build
 FROM alpine:3.7
 COPY --from=builder /go/bin/app /go/bin/app
 COPY --from=uibuilder /app/build /go/bin/wwwroot
-EXPOSE 3000
 CMD ["/go/bin/app"]
