@@ -4,7 +4,7 @@ services:
   seibiki:
     build:
       context: ..
-      dockerfile: ./build/Dockerfile
+      dockerfile: ./build/Dockerfile.development
     ports:
       - 3001:3000
     env_file:
