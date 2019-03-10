@@ -24,9 +24,9 @@ func TestLookupEndpoint(t *testing.T) {
 		query    string
 		expected string
 	}{
-		{query: "とても良かったです。", expected: "../../test/testdata/example1.json"},
-		{query: "すもももももももものうち", expected: "../../test/testdata/example2.json"},
-		{query: "デジカメを買った", expected: "../../test/testdata/example3.json"},
+		{query: "とても良かったです。", expected: "../../testdata/testdata/example1.json"},
+		{query: "すもももももももものうち", expected: "../../testdata/testdata/example2.json"},
+		{query: "デジカメを買った", expected: "../../testdata/testdata/example3.json"},
 	}
 
 	ep := createTestEndpoint()
@@ -82,7 +82,7 @@ type mockDBClient struct {
 }
 
 func newMockDBClient() mongodb.Client {
-	jsonFile, _ := os.Open("../../test/testdata/entries.json")
+	jsonFile, _ := os.Open("../../testdata/testdata/entries.json")
 	defer jsonFile.Close()
 	byteValue, _ := ioutil.ReadAll(jsonFile)
 
