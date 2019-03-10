@@ -1,15 +1,6 @@
 version: "3"
 
 services:
-  cache:
-    image: bitnami/redis:latest
-    ports:
-      - '6379:6379'
-    environment:
-      - REDIS_PASSWORD=password
-    volumes:
-      - redis-data:/data
-
   seibiki:
     build:
       context: ..
@@ -18,8 +9,3 @@ services:
       - 3001:3000
     env_file:
       - ./.env
-    depends_on:
-      - cache
-
-volumes:
-  redis-data:

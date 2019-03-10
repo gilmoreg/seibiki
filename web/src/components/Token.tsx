@@ -21,9 +21,9 @@ class Token extends React.Component<TokenProps, any> {
 
     render() {
         const { token } = this.props;
-        const pos = token.pos.filter(p => p !== '*').join(', ');
-        const targetPos = posMapping[token.pos[0]];
-        const filteredEntries = token.entries && token.entries.filter(e => e.partofspeech === targetPos);
+        const pos = token && token.pos && token.pos.length && token.pos.filter(p => p !== '*').join(', ');
+        const targetPos = pos && pos.length && posMapping[token.pos[0]];
+        const filteredEntries = targetPos && token.entries && token.entries.filter(e => e.partofspeech === targetPos);
         const entries = filteredEntries && filteredEntries.length ? filteredEntries : token.entries;
         // const entries = token.entries && token.entries
         //    

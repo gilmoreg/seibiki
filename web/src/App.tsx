@@ -4,13 +4,11 @@ import Form from './components/Form';
 import { WordData } from './types';
 import './App.css';
 
-import logo from './logo.svg';
-
 export interface AppState {
   results: WordData[];
 }
 
-class App extends React.Component {
+class App extends React.Component<any, AppState> {
   constructor(props: any) {
     super(props);
     this.state = { results: [] };
@@ -25,12 +23,11 @@ class App extends React.Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Seibiki (正引き)</h1>
         </header>
         <div className="App-intro">
           <Form update={this.update} />
-          <Answer words={undefined} />
+          <Answer words={this.state.results} />
         </div>
       </div>
     );

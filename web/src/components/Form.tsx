@@ -2,6 +2,8 @@ import * as React from "react";
 import './Form.css'
 import { WordData } from 'src/types';
 
+const apiPort = process.env.NODE_ENV === 'production' ? '' : ':3001';
+
 export interface FormProps {
     update: (w: WordData[]) => void;
 }
@@ -27,12 +29,14 @@ class Form extends React.Component<FormProps, FormState> {
 
     submit(e: React.FormEvent) {
         e.preventDefault();
-        fetch('http://localhost:3001/api/lookup', {
+        console.log()
+        fetch(`${window.location.protocol}//${window.location.hostname}${apiPort}/api/lookup`, {
             method: 'POST',
             body: JSON.stringify(this.state),
         })
             .then(res => res.json())
             .then(res => this.props.update(res))
+            .catch(err => console.error(err))
     }
 
     render() {
