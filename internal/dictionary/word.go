@@ -6,15 +6,12 @@ import (
 
 // IsPunctuation - true if token is punctuation mark
 func (t Token) IsPunctuation() bool {
-	if len(t.POS) < 2 {
-		return false
-	}
-	return t.POS[0] == "記号" && t.POS[1] == "句点"
+	return t.POS[0] == "記号"
 }
 
 // Convert - create Token from kagome token
-// Features is [0-5] POS, [6] base form, [7] reading, [8] pronounciation
-// 一段 = ichidan, 一般 = common
+// Features is [0-5] POS (0-4 ChaSen, unsure what 5 is)
+// [6] base form, [7] reading, [8] pronounciation
 func Convert(t tokenizer.Token) Token {
 	features := t.Features()
 	result := Token{
@@ -45,7 +42,10 @@ func (t Token) GetEntries(r Repository) Token {
 	if len(entries) > 0 {
 		t.Entries = make([]Entry, 0)
 		for _, entry := range entries {
-			t.Entries = append(t.Entries, entry)
+			entry.Meanings = filter(t.POS, entry.Meanings)
+			if len(entry.Meanings) > 0 {
+				t.Entries = append(t.Entries, entry)
+			}
 		}
 	}
 	return t
@@ -65,18 +65,12 @@ func (w Word) IsPunctuation() bool {
 	return w.Tokens[0].IsPunctuation()
 }
 
-// GetEntries - fetch entries for word/tokens from DictionaryRepository
+// GetEntries - fetch entries for tokens from DictionaryRepository
 func (w Word) GetEntries(r Repository) Word {
 	if w.IsPunctuation() {
 		return w
 	}
 
-	// Try looking up word surface (won't always succeed)
-	entries, _ := r.Lookup(w.Surface)
-	if len(entries) > 0 {
-		w.Entries = entries
-		return w
-	}
 	// If no result for word surface, look up each token individually
 	newTokens := make([]Token, 0)
 	for _, token := range w.Tokens {
@@ -101,16 +95,20 @@ type Token struct {
 
 // Entry - dictionary entry
 type Entry struct {
-	Sequence     int      `json:"sequence"`
-	Kanji        []string `json:"kanji"`
-	Readings     []string `json:"readings"`
-	Meanings     []string `json:"meanings"`
-	PartOfSpeech string   `json:"partofspeech"`
+	Sequence int       `json:"sequence"`
+	Kanji    []string  `json:"kanji"`
+	Readings []string  `json:"readings"`
+	Meanings []Meaning `json:"meanings"`
+}
+
+// Meaning - an English meaning with its part of speech
+type Meaning struct {
+	Gloss        string `json:"gloss"`
+	PartOfSpeech string `json:"partofspeech"`
 }
 
 // Word - set of one or more Tokens comprising a single unit
 type Word struct {
 	Surface string  `json:"surface"`
-	Entries []Entry `json:"entries"`
 	Tokens  []Token `json:"tokens"`
 }

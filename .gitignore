@@ -20,3 +20,4 @@ server/tmp/runner-build
 
 
 .vscode
+.artifacts

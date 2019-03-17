@@ -18,7 +18,8 @@ client:
 	cd web && npm start && cd ..
 
 artifacts:
-	GO111MODULE=on CGO_ENABLED=0 GOARCH=amd64 go build -a -installsuffix cgo -ldflags="-w -s" -o ./build/go-service cmd/*.go
+	mkdir -p ./.artifacts
+	GO111MODULE=on CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -ldflags="-w -s" -o ./.artifacts/go-service cmd/*.go
 
 deploy:
 	sh ./build/deploy.sh

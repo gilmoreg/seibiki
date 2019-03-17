@@ -93,3 +93,12 @@ func decode(rawEntries []byte) ([]Entry, error) {
 	err := json.Unmarshal(rawEntries, &entries)
 	return entries, err
 }
+
+// filter - remove entries that don't match part of speech where appropriate
+func (d *dictionary) filter(entries []Entry) []Entry {
+	res := make([]Entry, 0)
+	for _, e := range entries {
+		res = append(res, e)
+	}
+	return res
+}
