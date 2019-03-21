@@ -117,6 +117,7 @@ var ipaToEdictMapping = map[string][]string{
 	// 5.1.13 Adjective verb stem
 	// ex「あからさま」、「ミステリアス」、「決定的」、「無人」
 	// TODO unclear on this one
+	// Desc A so-called adjective verb stem that appears before "na".
 	"名詞,形容動詞語幹,*,*": []string{
 		"&adj-no;",
 		"&adj-na;",
@@ -127,6 +128,7 @@ var ipaToEdictMapping = map[string][]string{
 	// 5.1.14 Nai adjective stem
 	// ex 「申し訳」、「とんでも」、「おとなげ」
 	// TODO unclear on this one
+	// Desc An adjective word that appears immediately before the auxiliary verb "nai"
 	"名詞,ナイ形容詞語幹,*,*": []string{
 		"&n;",
 		"&n-pref;",
@@ -164,6 +166,7 @@ var ipaToEdictMapping = map[string][]string{
 	// TODO all examples in JEDict are nouns
 	// possibility for そう: https://jisho.org/word/%E3%81%9D%E3%81%86
 	// no possibilities for そ alone
+	// Desc The stem part of "そうだ" that is connected to the basic form and is an auxiliary verb in the school grammar.
 	"名詞,特殊,助動詞語幹,*": []string{
 		"&adj-na;",
 		"&suf;",
