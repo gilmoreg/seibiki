@@ -1,7 +1,7 @@
 package dictionary
 
 import (
-	"github.com/ikawaha/kagome/tokenizer"
+	"github.com/ikawaha/kagome.ipadic/tokenizer"
 )
 
 // IsPunctuation - true if token is punctuation mark
@@ -10,7 +10,7 @@ func (t Token) IsPunctuation() bool {
 }
 
 // Convert - create Token from kagome token
-// Features is [0-5] POS (0-4 ChaSen, unsure what 5 is)
+// Features is [0-5] POS (0-4 IPA codes, unsure what 5 is)
 // [6] base form, [7] reading, [8] pronounciation
 func Convert(t tokenizer.Token) Token {
 	features := t.Features()
@@ -18,7 +18,7 @@ func Convert(t tokenizer.Token) Token {
 		ID:      t.ID,
 		Class:   t.Class.String(),
 		Surface: t.Surface,
-		POS:     features[0:5],
+		POS:     features[0:4],
 		Base:    features[6],
 	}
 	if len(features) > 7 {
@@ -103,8 +103,9 @@ type Entry struct {
 
 // Meaning - an English meaning with its part of speech
 type Meaning struct {
-	Gloss        string `json:"gloss"`
-	PartOfSpeech string `json:"partofspeech"`
+	Gloss        string   `json:"gloss"`
+	PartOfSpeech []string `json:"partofspeech"`
+	Misc         []string `json:"misc"`
 }
 
 // Word - set of one or more Tokens comprising a single unit

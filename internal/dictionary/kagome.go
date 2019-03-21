@@ -1,7 +1,7 @@
 package dictionary
 
 import (
-	"github.com/ikawaha/kagome/tokenizer"
+	"github.com/ikawaha/kagome.ipadic/tokenizer"
 )
 
 func segment(tokens []tokenizer.Token) []Word {

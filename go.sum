@@ -16,8 +16,8 @@ github.com/gorilla/context v1.1.1 h1:AWwleXJkX/nhcU9bZSnZoi3h/qGYqQAGhq6zZe/aQW8
 github.com/gorilla/context v1.1.1/go.mod h1:kBGZzfjB9CEq2AlWe17Uuf7NDRt0dE0s8S51q0aT7Yg=
 github.com/gorilla/mux v1.6.2 h1:Pgr17XVTNXAk3q/r4CpKzC5xBM/qW1uVLV+IhRZpIIk=
 github.com/gorilla/mux v1.6.2/go.mod h1:1lud6UwP+6orDFRuTfBEV8e9/aOM/c4fVVCaMa2zaAs=
-github.com/ikawaha/kagome v1.8.3 h1:Bm/BQeQw+KglfMfIV531h8qA1uxCpSOibiwIk1KWIaM=
-github.com/ikawaha/kagome v1.8.3/go.mod h1:LgiXSUkkuqhYpcnhn7WTNCK1s+UZhD8GGX9jIf2zGNw=
+github.com/ikawaha/kagome.ipadic v1.0.1 h1:4c/tx3Rga6LvtTouEdvodcfeWWTttATZg8XIH8lRHG4=
+github.com/ikawaha/kagome.ipadic v1.0.1/go.mod h1:Nh0/WFhzTQYw9XlsOxAuhdSZ1/xfi7vn5pjqb6FBwJE=
 github.com/kr/logfmt v0.0.0-20140226030751-b84e30acd515 h1:T+h1c/A9Gawja4Y9mFVWj2vyii2bbUNDw3kt9VxK2EY=
 github.com/kr/logfmt v0.0.0-20140226030751-b84e30acd515/go.mod h1:+0opPa2QZZtGFBFZlji/RkVcI2GknAs/DXo4wKdlNEc=
 github.com/mongodb/mongo-go-driver v0.3.0 h1:00tKWMrabkVU1e57/TTP4ZBIfhn/wmjlSiRnIM9d0T8=
