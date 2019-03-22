@@ -252,6 +252,7 @@ var ipaToEdictMapping = map[string][]string{
 	// 5.1.31 Noun Verb Depdendent
 	// ex「ごらん」、「ちょうだい」のみ
 	// Most examples match the expression or interjection "please do this"
+	// Desc It is connected to "te" of [助詞-接続助詞] and is semantically verbal.
 	"名詞,動詞非自立的,*,*": []string{
 		"&exp;",
 		"&int;",
@@ -280,6 +281,43 @@ var ipaToEdictMapping = map[string][]string{
 		"&n;",
 	},
 
+	// 5.2.3 Verb Connection
+	// ex 「ぶっ」、「引き」
+	// Under prefix category, but 引き is only ever a suffix
+	// Desc The verb's imperative form or [verb syntactic form] + a prefix that precedes なる／なさる／くださる
+	"接頭詞,動詞接続,*,*": []string{
+		"&n;",
+		"&pref;",
+		"&suf;",
+	},
+
+	// 5.2.4 Adjective Connection
+	// ex 「お」、「まっ」、「クソ」
+	// Desc Prefix prefixed to adjectives.
+	"接頭詞,形容詞接続,*,*": []string{"&pref;"},
+
+	/*
+	   5.3 Verbs
+	*/
+
+	// 5.3.1,3-6,9,13-14,16-19,21,24,26,28,30-34 Verb Independent
+	// ex 「いがみ合う」、「たてつく」、「垢抜ける」
+	// 「くる」「来る」「やってくる」「やって来る」
+	"動詞,自立,*,*": verbEDictTypes,
+
+	// 5.3.2,7,10-12,15,20,22,25,27,29 Verb Depdendent
+	// ex 「（て）くる」「（て）来る」
+	// 「しまう」、「ちゃう」、「願う」
+	"動詞,非自立,*,*": verbEDictTypes,
+
+	// 5.3.8,23 Verb Suffix
+	// ex 「する」、「られる」、「させる」、「がかる」
+	"動詞,接尾,*,*": append(verbEDictTypes, "&suf;"),
+
+	/*
+	   5.4 Adjectives
+	*/
+
 	// Adjective Independent
 	// ex 「けたたましい」、「分別臭い」、「めでたい」
 	"形容詞,自立,*,*": adjectiveEDictTypes,
@@ -289,15 +327,7 @@ var ipaToEdictMapping = map[string][]string{
 	// Adjective Suffix
 	// 「ったらしい」、「っぽい」
 	"形容詞,接尾,*,*": append(adjectiveEDictTypes, "&suf;"),
-	// Verb Independent
-	// ex 「いがみ合う」、「たてつく」、「垢抜ける」
-	"動詞,自立,*,*": verbEDictTypes,
-	// Verb Dependent
-	// ex 「しまう」、「ちゃう」、「願う」
-	"動詞,非自立,*,*": verbEDictTypes,
-	// Verb Suffix
-	// ex 「する」、「られる」、「させる」、「がかる」
-	"動詞,接尾,*,*": append(verbEDictTypes, "&suf;"),
+
 	// Auxililary Verb
 	// ex 「らしい」、「ござる」、「っす」、「じゃん」
 	"助動詞,*,*,*": append(verbEDictTypes, []string{
@@ -398,12 +428,6 @@ var ipaToEdictMapping = map[string][]string{
 		"&prt;",
 	},
 
-	"接頭詞,形容詞接続,*,*": []string{
-		"&int;",
-		"&n;",
-		"&pn;",
-		"&pref;",
-	},
 	"助詞,特殊,*,*": []string{
 		"&aux-v;",
 		"&exp;",
@@ -441,11 +465,7 @@ var ipaToEdictMapping = map[string][]string{
 		"&n;",
 		"&pref;",
 	},
-	"接頭詞,動詞接続,*,*": []string{
-		"&n;",
-		"&pref;",
-		"&suf;",
-	},
+
 	"助詞,連体化,*,*": []string{
 		"&prt;",
 	},
