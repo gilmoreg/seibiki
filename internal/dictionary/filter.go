@@ -438,13 +438,20 @@ var ipaToEdictMapping = map[string][]string{
 	   5.9 Auxililary Verbs
 	*/
 
-	// Auxililary Verb
+	// 5.9.1-14 Auxililary Verb
 	// ex 「らしい」、「ござる」、「っす」、「じゃん」
 	"助動詞,*,*,*": append(verbEDictTypes, []string{
 		"&aux-adj;",
 		"&aux;",
 	}...),
 
+	/*
+	   5.10 Interjections
+	*/
+
+	// 5.10.1 Interjections
+	// desc An impression verb. Greetings, etc.
+	// ex 「らしい」、「ござる」、「っす」、「じゃん」
 	"感動詞,*,*,*": []string{
 		"&adv-to;",
 		"&adv;",
@@ -458,6 +465,22 @@ var ipaToEdictMapping = map[string][]string{
 		"&prt;",
 	},
 
+	/*
+	   5.11 Symbols
+	*/
+
+	// 5.11.1-7 Symbol
+	// ex 「”」、「＞」
+	"記号,アルファベット,*,*": []string{
+		"&n;",
+		"&pref;",
+	},
+
+	/*
+	   5.12 Filler
+	*/
+
+	// 5.12.1 Filler
 	"フィラー,*,*,*": []string{
 		"&adv;",
 		"&exp;",
@@ -465,23 +488,32 @@ var ipaToEdictMapping = map[string][]string{
 		"&prt;",
 	},
 
+	/*
+	   5.13 Other
+	*/
+
+	// 5.13.1 Other Intermittent
 	"その他,間投,*,*": []string{
 		"&int;",
 		"&prt;",
 	},
 
-	"鐃緒申鐃銃誌申,鐃緒申立,*,*": []string{
-		"&n-suf;",
-		"&n;",
-		"&pn;",
-		"&pref;",
-		"&suf;",
-	},
+	/*
+		     Other
 
-	"記号,アルファベット,*,*": []string{
-		"&n;",
-		"&pref;",
-	},
+		    "鐃緒申鐃銃誌申,鐃緒申立,*,*": []string{
+		      "&n-suf;",
+		      "&n;",
+		      "&pn;",
+		      "&pref;",
+		      "&suf;",
+		    },
+
+			   This category was found in the IPA files from https://github.com/taku910/mecab
+			   but is not present in the IPA manual. Unsure if it is an error.
+		     It doesn't even seem to be valid Japanese. Leaving it commented out until I'm
+		     sure it isn't a real edge case
+	*/
 }
 
 var adjectiveEDictTypes = []string{
