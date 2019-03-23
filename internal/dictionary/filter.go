@@ -315,18 +315,128 @@ var ipaToEdictMapping = map[string][]string{
 	"動詞,接尾,*,*": append(verbEDictTypes, "&suf;"),
 
 	/*
-	   5.4 Adjectives
+	   5.4 Adjectives (Keiyōshi)
 	*/
 
-	// Adjective Independent
+	// 5.4.1-4 Adjective Independent
 	// ex 「けたたましい」、「分別臭い」、「めでたい」
 	"形容詞,自立,*,*": adjectiveEDictTypes,
-	// Adjective Dependent
+
+	// 5.4.5-8 Adjective Dependent
 	// ex 「づらい」、「がたい」、「よい」
 	"形容詞,非自立,*,*": adjectiveEDictTypes,
-	// Adjective Suffix
+
+	// 5.4.9-10 Adjective Suffix
 	// 「ったらしい」、「っぽい」
 	"形容詞,接尾,*,*": append(adjectiveEDictTypes, "&suf;"),
+
+	/*
+	   5.5 Adverbs
+	*/
+
+	// 5.5.1 Adverb General
+	// ex 「たいそう」、「人一倍」、「いけしゃあしゃあ」
+	"副詞,一般,*,*": adverbEDictTypes,
+
+	// 5.5.2 Adverb Connection Particle
+	// ex 「あまり」、「いつも」、「ぱさぱさ」
+	"副詞,助詞類接続,*,*": adverbEDictTypes,
+
+	/*
+	   5.6 Adjectives (rentaishi)
+	*/
+
+	// 5.6.1 Prenominal or attributive adjective
+	// ex 「この」、「いろんな」、「おっきな」、「堂々たる」
+	// https://en.wiktionary.org/wiki/%E9%80%A3%E4%BD%93%E8%A9%9E
+	"連体詞,*,*,*": []string{"&adj-pn;"},
+
+	/*
+	   5.7 Conjunctions
+	*/
+
+	// 5.7.1 Conjunction
+	// ex 「が」「けれども」「そして」「じゃあ」「それどころか」…
+	"接続詞,*,*,*": []string{"&conj;"},
+
+	/*
+	   5.8 Particles
+	*/
+
+	// 5.8.1 Case Particle General
+	"助詞,格助詞,一般,*": []string{"&prt;"},
+
+	// 5.8.2 Quotation
+	// ex 「（～だ）と（述べた．）」「（～である）と（して執行猶予...）」
+	"助詞,格助詞,引用,*": []string{"&prt;"},
+
+	// 5.8.3 Compound/Phrase
+	// ex 「について」、「とかいう」
+	"助詞,格助詞,連語,*": []string{
+		"&exp;",
+		"&prt;",
+	},
+
+	// 5.8.4 Conjunction
+	// ex 「て」、「つつ」、「および」、「ので」
+	"助詞,接続助詞,*,*": []string{"&prt;"},
+
+	// 5.8.5 Cohesion
+	// ex 「こそ」「さえ」「しか」「すら」「は」「も」「ぞ」
+	"助詞,係助詞,*,*": []string{"&prt;"},
+
+	// 5.8.6 Derivative
+	// ex 「くらい」、「なんか」、「ばっかり」
+	"助詞,副助詞,*,*": []string{
+		"&exp;",
+		"&prt;",
+	},
+
+	// 5.8.7 Parallel
+	// ex 「と」「たり」「だの」「だり」「とか」「なり」「や」「やら」
+	// https://www.wasabi-jpn.com/japanese-grammar/parallel-markers-to-ya-and-ka/
+	"助詞,並立助詞,*,*": []string{
+		"&prt;",
+		"&conj;",
+	},
+
+	// 5.8.8 Final
+	// ex 「かしら」、「ぞ」、「っけ」、「わい」
+	// Note The final particle "や" is "(good) or "(wow)", etc.
+	"助詞,終助詞,*,*": []string{"&prt;"},
+
+	// 5.8.9 Derivative Concurrent/Final
+	// ex 「か」
+	"助詞,副助詞／並立助詞／終助詞,*,*": []string{"&prt;"},
+
+	// 5.8.10 Adjoint
+	// ex 「と」、「に」のみ
+	"助詞,連体化,*,*": []string{"&prt;"},
+
+	// 5.8.11 Adverbization
+	// ex 「に」「と」
+	// desc "On" and "to" immediately after onomatopoeia and similar nouns and adverbs.
+	// note However, if it is related to "do" or "become" and represents a change of state, it is a case particle.
+	"助詞,副詞化,*,*": []string{"&prt;"},
+
+	// 5.8.12 Special
+	// ex 「かな」「けむ」「（～しただろう）に」「（あんた）にゃ（わからん）」「（俺）ん（家）」
+	// desc Not applicable to the above classifications. Includes particles used for tanka and haiku etc.
+	"助詞,特殊,*,*": []string{
+		"&exp;",
+		"&int;",
+		"&prt;",
+		"&suf;",
+	},
+
+	// 5.8.13 Interjected
+	// ex 「(松島) や」
+	// desc literary usage
+	"助詞,間投助詞,*,*": []string{"&prt;"},
+
+	/*
+	   5.9 Auxililary Verbs
+	*/
 
 	// Auxililary Verb
 	// ex 「らしい」、「ござる」、「っす」、「じゃん」
@@ -334,52 +444,7 @@ var ipaToEdictMapping = map[string][]string{
 		"&aux-adj;",
 		"&aux;",
 	}...),
-	// Particle End
-	// ex 「かしら」、「ぞ」、「っけ」、「わい」
-	"助詞,終助詞,*,*": []string{
-		"&prt;",
-	},
-	// Particle Related
-	// ex 「は」、「こそ」、「も」、「や」
-	"助詞,係助詞,*,*": []string{
-		"&prt;",
-	},
-	// Particle Parallel
-	// ex 「とか」、「だの」、「やら」
-	// https://www.wasabi-jpn.com/japanese-grammar/parallel-markers-to-ya-and-ka/
-	"助詞,並立助詞,*,*": []string{
-		"&prt;",
-		"&conj;",
-	},
-	// Particle JC( * )
-	// ex 「て」、「つつ」、「および」、「ので」
-	"助詞,接続助詞,*,*": []string{
-		"&prt;",
-	},
-	// Prenominal or attributive adjective
-	// ex 「この」、「いろんな」、「おっきな」、「堂々たる」
-	// https://en.wiktionary.org/wiki/%E9%80%A3%E4%BD%93%E8%A9%9E
-	"連体詞,*,*,*": []string{
-		"&adj-pn;",
-	},
-	// Adverb General
-	// ex 「たいそう」、「人一倍」、「いけしゃあしゃあ」
-	"副詞,一般,*,*": adverbEDictTypes,
 
-	// Adverb Connection Particle
-	// ex 「あまり」、「いつも」、「ぱさぱさ」
-	"副詞,助詞類接続,*,*": adverbEDictTypes,
-
-	"接続詞,*,*,*": []string{
-		"&adv;",
-		"&aux;",
-		"&conj;",
-		"&exp;",
-		"&int;",
-		"&n-adv;",
-		"&n;",
-		"&prt;",
-	},
 	"感動詞,*,*,*": []string{
 		"&adv-to;",
 		"&adv;",
@@ -390,29 +455,6 @@ var ipaToEdictMapping = map[string][]string{
 		"&int;",
 		"&n;",
 		"&pn;",
-		"&prt;",
-	},
-	"助詞,副助詞,*,*": []string{
-		"&aux;",
-		"&conj;",
-		"&exp;",
-		"&int;",
-		"&n-adv;",
-		"&prt;",
-		"&suf;",
-	},
-	"助詞,格助詞,一般,*": []string{
-		"&aux;",
-		"&conj;",
-		"&int;",
-		"&n;",
-		"&prt;",
-	},
-	"助詞,格助詞,連語,*": []string{
-		"&adv;",
-		"&aux;",
-		"&conj;",
-		"&exp;",
 		"&prt;",
 	},
 
@@ -428,24 +470,6 @@ var ipaToEdictMapping = map[string][]string{
 		"&prt;",
 	},
 
-	"助詞,特殊,*,*": []string{
-		"&aux-v;",
-		"&exp;",
-		"&int;",
-		"&prt;",
-		"&suf;",
-	},
-	"助詞,格助詞,引用,*": []string{
-		"&conj;",
-		"&n;",
-		"&prt;",
-	},
-	"助詞,副詞化,*,*": []string{
-		"&conj;",
-		"&n;",
-		"&prt;",
-	},
-
 	"鐃緒申鐃銃誌申,鐃緒申立,*,*": []string{
 		"&n-suf;",
 		"&n;",
@@ -454,20 +478,9 @@ var ipaToEdictMapping = map[string][]string{
 		"&suf;",
 	},
 
-	"助詞,副助詞／並立助詞／終助詞,*,*": []string{
-		"&adv;",
-		"&pref;",
-		"&prt;",
-		"&suf;",
-	},
-
 	"記号,アルファベット,*,*": []string{
 		"&n;",
 		"&pref;",
-	},
-
-	"助詞,連体化,*,*": []string{
-		"&prt;",
 	},
 }
 
