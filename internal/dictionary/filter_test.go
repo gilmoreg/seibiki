@@ -16,31 +16,31 @@ func TestFilter(t *testing.T) {
 		{
 			"nouns",
 			[]string{"名詞", "一般", "*", "*"},
-			[]Meaning{meaning("&n;")},
+			meanings("&n;"),
 			1,
 		},
 		{
 			"verbs",
 			[]string{"動詞", "自立", "*", "*"},
-			[]Meaning{meaning("&v1;")},
+			meanings("&v1;"),
 			1,
 		},
 		{
 			"exclude",
 			[]string{"名詞", "非自立", "助動詞語幹", "*"},
-			[]Meaning{meaning("&v1;")},
+			meanings("&v1;"),
 			0,
 		},
 		{
 			"no match",
 			[]string{"", "", "", ""},
-			[]Meaning{meaning("&adj;")},
+			meanings("&adj;"),
 			0,
 		},
 		{
 			"malformed pos",
 			[]string{},
-			[]Meaning{meaning("&adj;")},
+			meanings("&adj;"),
 			1,
 		},
 	}
@@ -52,6 +52,6 @@ func TestFilter(t *testing.T) {
 	}
 }
 
-func meaning(pos string) Meaning {
-	return Meaning{PartOfSpeech: []string{pos}}
+func meanings(pos string) []Meaning {
+	return []Meaning{Meaning{PartOfSpeech: []string{pos}}}
 }
