@@ -29,7 +29,5 @@ test:
 
 ci:
 	sleep 10
-	pwd
-	ls -la
 	chmod +x ./build/data/seed.sh
 	sh ./build/data/seed.sh
