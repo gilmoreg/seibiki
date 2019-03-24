@@ -7,6 +7,7 @@ import (
 	"github.com/gilmoreg/seibiki/internal/connectors/mongodb"
 	"github.com/gilmoreg/seibiki/internal/connectors/redis"
 	redigo "github.com/gomodule/redigo/redis"
+	"github.com/mongodb/mongo-go-driver/bson"
 	"go.uber.org/zap"
 )
 
@@ -40,7 +41,13 @@ func (d *dictionary) Lookup(query string) ([]Entry, error) {
 		d.logger.Error(err)
 		return nil, err
 	}
-	rawEntries, err := d.db.Get(query)
+	pipeline := bson.M{
+		"$or": bson.A{
+			bson.M{"readings": query},
+			bson.M{"kanji": query},
+		},
+	}
+	rawEntries, err := d.db.Get(pipeline)
 	if err != nil {
 		d.logger.Error(err)
 		return nil, err

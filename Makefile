@@ -26,3 +26,8 @@ deploy:
 
 test:
 	go test -v -cover ./...
+
+ci:
+	sleep 10
+	cd build/data
+	sh ./seed.sh

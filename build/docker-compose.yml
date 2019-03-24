@@ -1,6 +1,13 @@
 version: "3"
 
 services:
+  redis:
+    image: bitnami/redis:latest
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - 6379:6379
+
   seibiki:
     build:
       context: ..
@@ -9,3 +16,5 @@ services:
       - 3001:3000
     env_file:
       - ./.env
+    depends_on:
+      - redis

@@ -12,7 +12,7 @@ import (
 
 // Client -
 type Client interface {
-	Get(query string) ([]byte, error)
+	Get(query interface{}) ([]byte, error)
 }
 
 type client struct {
@@ -47,19 +47,13 @@ func (m *client) connect(connectionString string) error {
 }
 
 // Lookup - perform a dictionary lookup
-func (m *client) Get(query string) ([]byte, error) {
-	pipeline := bson.M{
-		"$or": bson.A{
-			bson.M{"readings": query},
-			bson.M{"kanji": query},
-		},
-	}
-	cur, err := m.client.Database("jedict").Collection("entries").Find(context.TODO(), pipeline, options.Find())
-	defer cur.Close(context.TODO())
+func (m *client) Get(query interface{}) ([]byte, error) {
+	cur, err := m.client.Database("jedict").Collection("entries").Find(context.TODO(), query, options.Find())
 	if err != nil {
 		m.logger.Error(err)
 		return nil, err
 	}
+	defer cur.Close(context.TODO())
 
 	var result bson.A
 
