@@ -30,4 +30,5 @@ test:
 ci:
 	sleep 10
 	cd build/data
-	sh ./seed.sh
+	chmod +x seed.sh
+	sh seed.sh

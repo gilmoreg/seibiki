@@ -4,7 +4,7 @@ go:
 services:
 - docker
 - mongodb
-- redis
+- redis-server
 before_script: make ci
 script: make test
 after_success: make deploy
