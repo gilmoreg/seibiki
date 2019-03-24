@@ -29,8 +29,7 @@ test:
 
 ci:
 	sleep 15
-	mongo test --eval 'use jedict;'
-	mongo jedict --eval 'db.createUser({user:"reader",pwd:"password",roles:["readWrite"]});'
+	mongo test --eval 'use jedict\ndb.createUser({user:"reader",pwd:"password",roles:["readWrite"]});'
 	mongorestore --host localhost --port 27017 --username reader --password password --authenticationDatabase jedict --drop --gzip --archive=./build/data/jedict.mongodb.archive
 	sleep 20
 
