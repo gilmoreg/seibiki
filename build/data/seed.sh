@@ -1,1 +1,1 @@
-mongorestore --host localhost --port 27017 --drop --gzip --archive=./build/data/jedict.mongodb.archive
+mongorestore --host localhost --port 27017 --username reader --password password --authenticationDatabase jedict --drop --gzip --archive=/docker-entrypoint-initdb.d/jedict.mongodb.archive

@@ -29,5 +29,11 @@ test:
 
 ci:
 	sleep 10
-	chmod +x ./build/data/seed.sh
-	sh ./build/data/seed.sh
+	make test_db
+
+test_db:
+	chmod +x ./build/testdb.sh
+	sh ./build/testdb.sh
+
+test_db_down:
+	docker rm mongodb --force
