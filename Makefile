@@ -28,8 +28,9 @@ test:
 	go test -v -cover ./...
 
 ci:
-	sleep 10
-	make test_db
+	sleep 15
+	mongo jedict --eval 'jedict.createUser({user:"reader",pwd:"password",roles:["readWrite"]});'
+	mongorestore --host localhost --port 27017 --username reader --password password --authenticationDatabase jedict --drop --gzip --archive=./build/data/jedict.mongodb.archive
 	sleep 20
 
 test_db:

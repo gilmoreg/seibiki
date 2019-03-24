@@ -17,3 +17,17 @@ make up-build
 # development UI will be available at http://localhost:3000
 make client
 ```
+
+## Running Tests
+
+```bash
+make test_db
+make test
+
+# On subsequent runs, test mongodb should be running
+# To stop it:
+make test_db_down
+
+# To run it again:
+make test_db
+```
