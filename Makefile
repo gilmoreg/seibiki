@@ -30,6 +30,7 @@ test:
 ci:
 	sleep 10
 	make test_db
+	sleep 20
 
 test_db:
 	chmod +x ./build/testdb.sh
