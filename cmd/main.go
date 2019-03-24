@@ -41,7 +41,10 @@ func main() {
 	defer l.Sync()
 	r := mux.NewRouter()
 	c := redis.New(os.Getenv("REDIS_URL"), l)
-	m := mongodb.New(os.Getenv("MONGODB_CONNECTION_STRING"), l)
+	m, err := mongodb.New(os.Getenv("MONGODB_CONNECTION_STRING"), l)
+	if err != nil {
+		panic(err)
+	}
 	d := dictionary.New(m, c, l)
 	svc := service.New(l, d)
 	s := Server{

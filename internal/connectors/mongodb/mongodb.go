@@ -21,13 +21,12 @@ type client struct {
 }
 
 // New - create new mongodb client
-func New(connectionString string, logger *zap.SugaredLogger) Client {
+func New(connectionString string, logger *zap.SugaredLogger) (Client, error) {
 	c := client{logger: logger}
-	c.connect(connectionString)
-	return &c
+	err := c.connect(connectionString)
+	return &c, err
 }
 
-// Connect - connect to database
 func (m *client) connect(connectionString string) error {
 	client, err := mongo.Connect(context.TODO(), connectionString)
 	if err != nil {
@@ -46,7 +45,7 @@ func (m *client) connect(connectionString string) error {
 	return nil
 }
 
-// Lookup - perform a dictionary lookup
+// Get - perform a dictionary lookup
 func (m *client) Get(query interface{}) ([]byte, error) {
 	cur, err := m.client.Database("jedict").Collection("entries").Find(context.TODO(), query, options.Find())
 	if err != nil {
