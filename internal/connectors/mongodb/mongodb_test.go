@@ -18,8 +18,9 @@ func TestMongoDBDriver(t *testing.T) {
 	assert.Nil(t, err)
 	var entries []dictionary.Entry
 	err = json.Unmarshal(res, &entries)
+	// Assert we are able to deserialize this to the correct type of response
 	assert.Nil(t, err)
-	assert.Equal(t, 1, len(entries))
+	assert.NotNil(t, entries)
 }
 
 func newTestLogger() *zap.SugaredLogger {

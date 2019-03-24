@@ -34,9 +34,8 @@ ci:
 	mongorestore --host localhost --port 27017 --username reader --password password --authenticationDatabase jedict --drop --gzip --archive=./build/data/jedict.mongodb.archive
 	sleep 20
 
-test_db:
-	chmod +x ./build/testdb.sh
-	sh ./build/testdb.sh
+test_deps:
+	docker-compose -f ./build/test_deps.yml up
 
-test_db_down:
-	docker rm mongodb --force
+test_deps_down:
+	docker-compose -f ./build/test_deps.yml down

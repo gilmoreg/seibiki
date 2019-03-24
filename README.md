@@ -18,16 +18,12 @@ make up-build
 make client
 ```
 
-## Running Tests
+## Running Tests Locally
 
 ```bash
-make test_db
+make test_deps
 make test
 
-# On subsequent runs, test mongodb should be running
-# To stop it:
-make test_db_down
-
-# To run it again:
-make test_db
+# When finished
+make test_deps_down
 ```

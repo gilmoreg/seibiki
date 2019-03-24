@@ -40,7 +40,7 @@ func main() {
 	l := zap.NewExample().Sugar()
 	defer l.Sync()
 	r := mux.NewRouter()
-	c := redis.New(l)
+	c := redis.New(os.Getenv("REDIS_URL"), l)
 	m := mongodb.New(os.Getenv("MONGODB_CONNECTION_STRING"), l)
 	d := dictionary.New(m, c, l)
 	svc := service.New(l, d)
