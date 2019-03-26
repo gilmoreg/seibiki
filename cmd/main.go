@@ -23,7 +23,7 @@ type Server struct {
 
 // Routes - add routes
 func (s *Server) Routes() {
-	s.router.Path("/api/lookup").Methods("POST").Handler(endpoints.Handler(s.svc, s.logger))
+	s.router.Path("/api/lookup").Methods("POST").Handler(endpoints.Handler(s.svc))
 	s.router.
 		PathPrefix("/static/js/").
 		Handler(http.StripPrefix("/static/js/", http.FileServer(http.Dir("/go/bin/wwwroot/static/js/"))))
