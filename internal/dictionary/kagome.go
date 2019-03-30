@@ -4,6 +4,8 @@ import (
 	"github.com/ikawaha/kagome.ipadic/tokenizer"
 )
 
+var t = tokenizer.New()
+
 func segment(tokens []tokenizer.Token) []Word {
 	words := make([]Word, 0)
 	currentWord := make([]Token, 0)
@@ -47,7 +49,6 @@ func segment(tokens []tokenizer.Token) []Word {
 
 // Tokenize - use Kagome to tokenize input string, collect into words
 func Tokenize(query string) []Word {
-	t := tokenizer.New()
 	tokens := t.Analyze(query, tokenizer.Search)
 	words := segment(tokens)
 	return words
