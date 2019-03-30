@@ -1,7 +1,6 @@
 package dictionary
 
 import (
-	"fmt"
 	"strings"
 )
 
@@ -36,7 +35,6 @@ func match(pos []string, meaning Meaning) bool {
 	} else {
 		// If it doesn't match any IPA type,
 		// do not include (may change)
-		fmt.Println("No match for " + partOfSpeech)
 		return false
 	}
 	return false
