@@ -1,9 +1,14 @@
+export interface MeaningData {
+    gloss: string;
+    partofspeech: string[];
+    misc: string[];
+}
+
 export interface EntryData {
     sequence: number;
     kanji: string[] | null;
     readings: string[];
-    meanings: string[];
-    partofspeech: string;
+    meanings: MeaningData[] | null;
 }
 
 export interface TokenData {
@@ -19,7 +24,6 @@ export interface TokenData {
 
 export interface WordData {
     surface: string;
-    entries: EntryData[] | null;
     tokens: TokenData[];
 }
 

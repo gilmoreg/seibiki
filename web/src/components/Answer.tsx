@@ -2,7 +2,6 @@ import * as React from "react";
 import { WordData } from '../types';
 import ShortWord from './ShortWord';
 import Word from './Word';
-import initialState from '../state/initial';
 
 import './Answer.css';
 
@@ -15,7 +14,7 @@ export interface AnswerState {
 }
 
 class Answer extends React.Component<AnswerProps, AnswerState> {
-    constructor(props: AnswerProps = { words: initialState }) {
+    constructor(props: AnswerProps) {
         super(props);
         this.state = { selected: -1 };
 
