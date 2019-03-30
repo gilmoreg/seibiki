@@ -23,7 +23,7 @@ type Server struct {
 
 // Routes - add routes
 func (s *Server) Routes() {
-	s.router.Path("/api/lookup").Methods("POST").Handler(endpoints.Handler(s.svc, s.logger))
+	s.router.Path("/api/lookup").Methods("POST").Handler(endpoints.Handler(s.svc))
 	s.router.
 		PathPrefix("/static/js/").
 		Handler(http.StripPrefix("/static/js/", http.FileServer(http.Dir("/go/bin/wwwroot/static/js/"))))
@@ -40,8 +40,11 @@ func main() {
 	l := zap.NewExample().Sugar()
 	defer l.Sync()
 	r := mux.NewRouter()
-	c := redis.New(l)
-	m := mongodb.New(os.Getenv("MONGODB_CONNECTION_STRING"), l)
+	c := redis.New(os.Getenv("REDIS_URL"), l)
+	m, err := mongodb.New(os.Getenv("MONGODB_CONNECTION_STRING"), l)
+	if err != nil {
+		panic(err)
+	}
 	d := dictionary.New(m, c, l)
 	svc := service.New(l, d)
 	s := Server{

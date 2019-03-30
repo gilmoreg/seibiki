@@ -12,7 +12,7 @@ import (
 
 // Client -
 type Client interface {
-	Get(query string) ([]byte, error)
+	Get(query interface{}) ([]byte, error)
 }
 
 type client struct {
@@ -21,13 +21,12 @@ type client struct {
 }
 
 // New - create new mongodb client
-func New(connectionString string, logger *zap.SugaredLogger) Client {
+func New(connectionString string, logger *zap.SugaredLogger) (Client, error) {
 	c := client{logger: logger}
-	c.connect(connectionString)
-	return &c
+	err := c.connect(connectionString)
+	return &c, err
 }
 
-// Connect - connect to database
 func (m *client) connect(connectionString string) error {
 	client, err := mongo.Connect(context.TODO(), connectionString)
 	if err != nil {
@@ -46,20 +45,14 @@ func (m *client) connect(connectionString string) error {
 	return nil
 }
 
-// Lookup - perform a dictionary lookup
-func (m *client) Get(query string) ([]byte, error) {
-	pipeline := bson.M{
-		"$or": bson.A{
-			bson.M{"readings": query},
-			bson.M{"kanji": query},
-		},
-	}
-	cur, err := m.client.Database("jedict").Collection("entries").Find(context.TODO(), pipeline, options.Find())
-	defer cur.Close(context.TODO())
+// Get - perform a dictionary lookup
+func (m *client) Get(query interface{}) ([]byte, error) {
+	cur, err := m.client.Database("jedict").Collection("entries").Find(context.TODO(), query, options.Find())
 	if err != nil {
 		m.logger.Error(err)
 		return nil, err
 	}
+	defer cur.Close(context.TODO())
 
 	var result bson.A
 

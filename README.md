@@ -17,3 +17,13 @@ make up-build
 # development UI will be available at http://localhost:3000
 make client
 ```
+
+## Running Tests Locally
+
+```bash
+make test_deps
+make test
+
+# When finished
+make test_deps_down
+```

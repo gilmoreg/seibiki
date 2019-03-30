@@ -1,0 +1,46 @@
+{
+	"info": {
+		"_postman_id": "3f669276-64cd-4009-b133-f1a0f4ef2ccc",
+		"name": "Seibiki",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST /api/lookup",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"query\": \"寒い中で飲むココアはうまいね\"\n}\n"
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/lookup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"lookup"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

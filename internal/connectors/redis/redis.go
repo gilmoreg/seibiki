@@ -4,7 +4,6 @@ package redis
 
 import (
 	"errors"
-	"os"
 	"time"
 
 	"github.com/gomodule/redigo/redis"
@@ -23,12 +22,12 @@ type redisClient struct {
 }
 
 // New - return new redisClient
-func New(l *zap.SugaredLogger) Client {
+func New(connectionString string, l *zap.SugaredLogger) Client {
 	p := &redis.Pool{
 		MaxIdle:     3,
 		IdleTimeout: 240 * time.Second,
 		Dial: func() (redis.Conn, error) {
-			c, err := redis.DialURL(os.Getenv("REDIS_URL"))
+			c, err := redis.DialURL(connectionString)
 			if err != nil {
 				return nil, err
 			}
