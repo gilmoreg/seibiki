@@ -43,10 +43,16 @@ func TestFilter(t *testing.T) {
 			meanings("&adj;"),
 			1,
 		},
+		{
+			"proper noun country includes &n;",
+			[]string{"名詞", "固有名詞", "地域", "国"},
+			meanings("&n;"),
+			1,
+		},
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			res := filter(test.pos, test.meanings)
+			res := Filter(test.pos, test.meanings)
 			assert.Equal(t, test.expected, len(res))
 		})
 	}

@@ -62,10 +62,10 @@ func (d *dictionary) Lookup(query string) ([]Entry, error) {
 }
 
 func (d *dictionary) cacheLookup(query string) (bool, []Entry, error) {
-	d.logger.Infof("Checking cache for %s", query)
+	// d.logger.Infof("Checking cache for %s", query)
 	data, err := d.cache.Get(query)
 	if err == redigo.ErrNil {
-		d.logger.Infof("%s does not exist in cache. Fetching from db", query)
+		// d.logger.Infof("%s does not exist in cache. Fetching from db", query)
 		return false, nil, nil
 	}
 	if err != nil {
@@ -78,7 +78,7 @@ func (d *dictionary) cacheLookup(query string) (bool, []Entry, error) {
 		d.logger.Error(err)
 		return false, nil, err
 	}
-	d.logger.Infof("fetched %s", query)
+	// d.logger.Infof("fetched %s", query)
 	return true, entries, nil
 }
 
@@ -87,7 +87,7 @@ func (d *dictionary) cacheFill(query string, entries []Entry) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	d.logger.Infof("setting %s in cache", query)
+	// d.logger.Infof("setting %s in cache", query)
 	err = d.cache.Set(query, bytes)
 	if err != nil {
 		d.logger.Errorf("error setting cache: %s", err.Error())
@@ -99,13 +99,4 @@ func decode(rawEntries []byte) ([]Entry, error) {
 	var entries []Entry
 	err := json.Unmarshal(rawEntries, &entries)
 	return entries, err
-}
-
-// filter - remove entries that don't match part of speech where appropriate
-func (d *dictionary) filter(entries []Entry) []Entry {
-	res := make([]Entry, 0)
-	for _, e := range entries {
-		res = append(res, e)
-	}
-	return res
 }

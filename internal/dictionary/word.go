@@ -42,7 +42,7 @@ func (t Token) GetEntries(r Repository) Token {
 	if len(entries) > 0 {
 		t.Entries = make([]Entry, 0)
 		for _, entry := range entries {
-			entry.Meanings = filter(t.POS, entry.Meanings)
+			entry.Meanings = Filter(t.POS, entry.Meanings)
 			if len(entry.Meanings) > 0 {
 				t.Entries = append(t.Entries, entry)
 			}
