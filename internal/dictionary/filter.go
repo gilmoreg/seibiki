@@ -4,8 +4,8 @@ import (
 	"strings"
 )
 
-// filter returns a slice of meanings that are deemed relevant
-func filter(pos []string, meanings []Meaning) []Meaning {
+// Filter returns a slice of meanings that are deemed relevant
+func Filter(pos []string, meanings []Meaning) []Meaning {
 	res := make([]Meaning, 0)
 	for _, m := range meanings {
 		if match(pos, m) {
@@ -59,43 +59,180 @@ var ipaToEdictMapping = map[string][]string{
 
 	// 5.1.1 Noun General
 	// ex 「大根」、「シエスタ」、「加速度」、「ありさま」
-	"名詞,一般,*,*": nounEDictTypes,
+	"名詞,一般,*,*": append(nounEDictTypes, []string{
+		"&adv-to;",
+		"&adj-t;",
+		"&adj-no;",
+		"&adv;",
+		"&adj-na;",
+		"&exp;",
+		"&suf;",
+		"&pref;",
+		"&pn;",
+		"&adj-f;",
+		"&ctr;",
+		"&adj-i;",
+		"&v1;",
+		"&vt;",
+		"&adj-pn;",
+		"&num;",
+		"&int;",
+		"&adj-nari;",
+		"&ctr;",
+		"&vt;",
+		"&aux-v;",
+		"&v5u;",
+		"&vi;",
+	}...),
 
 	// Proper Nouns
 
 	// 5.1.2 Proper Noun General
 	// ex 「北穂高岳」、「電通銀座ビル」、「Ｇ１」
-	"名詞,固有名詞,一般,*": []string{"&n-pr;"},
+	"名詞,固有名詞,一般,*": []string{
+		"&n;",
+		"&n-pr;",
+		"&adj-f;",
+		"&n-adv;",
+		"&n-t;",
+		"&adv-to;",
+		"&adv;",
+		"&adj-i;",
+		"&n-suf;",
+		"&pref;",
+		"&vs;",
+		"&int;",
+		"&suf;",
+		"&ctr;",
+		"&adj-no;",
+		"&adj-na;",
+		"&exp;",
+	},
 
 	// 5.1.3 Proper Noun Name General
 	// ex 「グッチ裕三」、「紫式部」
-	"名詞,固有名詞,人名,一般": []string{"&n-pr;"},
+	"名詞,固有名詞,人名,一般": []string{
+		"&n;",
+		"&n-pr;",
+		"&n-pref;",
+		"&exp;",
+		"&n-adv;",
+	},
 
 	// 5.1.4 Proper Noun Name Last Name
 	// ex 「山田」、「ビスコンティ」
-	"名詞,固有名詞,人名,姓": []string{"&n-pr;"},
+	"名詞,固有名詞,人名,姓": []string{
+		"&n;",
+		"&n-pr;",
+		"&n-adv;",
+		"&n-t;",
+		"&adj-t;",
+		"&adv-to;",
+		"&n-suf;",
+		"&num;",
+		"&adv;",
+		"&adj-na;",
+		"&exp;",
+		"&adj-f;",
+		"&vs;",
+		"&pref;",
+		"&suf;",
+		"&ctr;",
+		"&adj-no;",
+		"&int;",
+		"&adj-pn;",
+	},
 
 	// 5.1.5 Proper Noun Name First Name
 	// ex「Ｂ作」、「アントニオ」、「右京太夫」
-	"名詞,固有名詞,人名,名": []string{"&n-pr;"},
+	"名詞,固有名詞,人名,名": []string{
+		"&n;",
+		"&n-pr;",
+		"&adj-pn;",
+		"&ctr;",
+		"&pref;",
+		"&n-suf;",
+		"&v5r;",
+		"&vt;",
+		"&vi;",
+		"&n-adv;",
+		"&n-t;",
+		"&suf;",
+		"&adv;",
+		"&adj-t;",
+		"&adv-to;",
+		"&adj-na;",
+		"&adj-na;",
+		"&suf;",
+		"&num;",
+		"&adj-no;",
+		"&num;",
+		"&cop-da;",
+		"&prt;",
+		"&pn;",
+		"&v5m;",
+		"&conj;",
+		"&int;",
+	},
 
 	// 5.1.6 Proper Noun Name Organization
 	// ex 「いすゞ自動車」、「ニチレイ」、「統一アイルランド党」
-	"名詞,固有名詞,組織,*": []string{"&n-pr;"},
+	"名詞,固有名詞,組織,*": []string{
+		"&n;",
+		"&n-pr;",
+		"&n-adv;",
+		"&n-t;",
+		"&n-suf;",
+		"&adj-na;",
+		"&adj-f;",
+		"&exp;",
+		"&int;",
+		"&pref;",
+		"&vs;",
+		"&adj-no;",
+		"&adv;",
+	},
 
 	// 5.1.7 Proper Noun Area General
 	// ex 「北海道」、「やながわ工業団地」、「ラムサール」
-	"名詞,固有名詞,地域,一般": []string{"&n-pr;"},
+	"名詞,固有名詞,地域,一般": []string{
+		"&n;",
+		"&n-pr;",
+		"&num;",
+		"&exp;",
+		"&pref;",
+		"&suf;",
+		"&adj-no;",
+		"&adv;",
+		"&n-adv;",
+		"&adj-na;",
+		"&adj-no;",
+		"&n-t;",
+		"&pn;",
+		"&adj-f;",
+		"&ctr;",
+		"&adj-t;",
+		"&adv-to;",
+		"&n-suf;",
+	},
 
 	// 5.1.8 Proper Noun Country
 	// ex 「露西亜」、「バングラデシュ」
-	"名詞,固有名詞,地域,国": []string{"&n-pr;"},
+	"名詞,固有名詞,地域,国": []string{"&n;", "&n-pr;"},
 
 	// Pronouns
 
 	// 5.1.9 Pronoun General
 	// ex 「そこ」、「俺」、「こんちくしょう」
-	"名詞,代名詞,一般,*": []string{"&pn;"},
+	"名詞,代名詞,一般,*": []string{
+		"&pn;",
+		"&n;",
+		"&int;",
+		"&exp;",
+		"&n-adv;",
+		"&conj;",
+		"&adv;",
+	},
 
 	// 5.1.10 Pronoun Contraction
 	// ex 「わたしゃ」、「そりゃあ」
@@ -106,11 +243,40 @@ var ipaToEdictMapping = map[string][]string{
 	"名詞,副詞可能,*,*": []string{
 		"&n-adv;",
 		"&adv;",
+		"&n;",
+		"&ctr;",
+		"&suf;",
+		"&n-t;",
+		"&vs;",
+		"&adj-no;",
+		"&n-suf;",
+		"&n-pref;",
+		"&adj-na;",
+		"&exp;",
+		"&adj-f;",
 	},
 
 	// 5.1.12 Verbal Connection (i.e. -suru noun/participle)
 	// ex 「苦労」、「終了」、「アピール」、「くしゃみ」
-	"名詞,サ変接続,*,*": []string{"&vs;"},
+	"名詞,サ変接続,*,*": []string{
+		"&vs;",
+		"&n;",
+		"&n-suf;",
+		"&n-t;",
+		"&pref;",
+		"&suf;",
+		"&adv;",
+		"&n-pref;",
+		"&ctr;",
+		"&exp;",
+		"&adj-i;",
+		"&adv-to;",
+		"&num;",
+		"&n-adv;",
+		"&adj-no;",
+		"&adj-f;",
+		"&pn;",
+	},
 
 	// 5.1.13 Adjective verb stem
 	// ex「あからさま」、「ミステリアス」、「決定的」、「無人」
@@ -121,6 +287,20 @@ var ipaToEdictMapping = map[string][]string{
 		"&adj-na;",
 		"&adj-nari;",
 		"&adj-pn;",
+		"&adj-t;", // for 芒洋 etc
+		"&adj-f;", // for 双対 etc
+		"&adv;",
+		"&adv-to;",
+		"&vs;",
+		"&n;",
+		"&exp;",
+		"&prt;",
+		"&int;",
+		"&suf;",
+		"&n-adv;",
+		"&n-suf;",
+		"&n-pref;",
+		"&pref;",
 	},
 
 	// 5.1.14 Nai adjective stem
@@ -134,7 +314,10 @@ var ipaToEdictMapping = map[string][]string{
 
 	// 5.1.15 Number
 	// ex 「ゼロ」、「億」
-	"名詞,数,*,*": []string{"&num;"},
+	"名詞,数,*,*": []string{
+		"&num;",
+		"&n;", // several Numbers are classified as nouns etc in Edict
+	},
 
 	// Dependent Nouns
 
@@ -144,7 +327,8 @@ var ipaToEdictMapping = map[string][]string{
 
 	// 5.1.17 Noun Dependent Possible
 	// ex 「限り」、「さなか」、「うち」
-	"名詞,非自立,副詞可能,*": nounEDictTypes,
+	// particle added for っきり
+	"名詞,非自立,副詞可能,*": append(nounEDictTypes, "&prt;"),
 
 	// 5.1.18 Auxilliary Verb Stem
 	// ex 「よ」、「よう」のみ
@@ -175,6 +359,21 @@ var ipaToEdictMapping = map[string][]string{
 	"名詞,接尾,一般,*": []string{
 		"&n-suf;",
 		"&suf;",
+		"&ctr;", // some IPA suffixes are counters in Edict
+		"&n;",
+		"&adj-i;",
+		"&vs;",
+		"&pref;",
+		"&exp;",
+		"&adj-f;",
+		"&adj-na;",
+		"&adj-no;",
+		"&pref;",
+		"&n-pref;",
+		"&n-adv;",
+		"&prt;",
+		"&vs;",
+		"&n-t;",
 	},
 
 	// 5.1.22 Suffix Name
@@ -217,6 +416,7 @@ var ipaToEdictMapping = map[string][]string{
 		"&adj-na;",
 		"&n-suf;",
 		"&suf;",
+		"&n;", // for 薄
 	},
 
 	// 5.1.27 Suffix Adverb Possible
@@ -226,14 +426,20 @@ var ipaToEdictMapping = map[string][]string{
 		"&n-adv;",
 		"&n-suf;",
 		"&suf;",
+		"&prt;", // for っきり
 	},
 
 	// 5.1.28 Suffix Counter
 	// ex 「オクターブ」、「％」、「ヶ国」
 	"名詞,接尾,助数詞,*": []string{
+		"&n;",
 		"&n-suf;",
 		"&ctr;",
+		"&pref;",
 		"&suf;",
+		"&num;", // for 毛 etc
+		"&n-adv;",
+		"&n-t;",
 	},
 
 	// 5.1.29 Suffix Special
@@ -256,6 +462,13 @@ var ipaToEdictMapping = map[string][]string{
 		"&int;",
 	},
 
+	// Special case (not found in IPA Manual)
+	// for いわく
+	"名詞,引用文字列,*,*": []string{
+		"&n;",
+		"&n-adv;",
+	},
+
 	/*
 	  5.2 Prefixes
 	*/
@@ -263,8 +476,10 @@ var ipaToEdictMapping = map[string][]string{
 	// 5.2.1 Noun Connection
 	// ex 「もと」、「アンチ」、「最」、「総」
 	"接頭詞,名詞接続,*,*": []string{
+		"&n;",
 		"&n-pref;",
 		"&pref;",
+		"&adv;", // for 定
 	},
 
 	// 5.2.2 Counter connection
@@ -292,7 +507,10 @@ var ipaToEdictMapping = map[string][]string{
 	// 5.2.4 Adjective Connection
 	// ex 「お」、「まっ」、「クソ」
 	// Desc Prefix prefixed to adjectives.
-	"接頭詞,形容詞接続,*,*": []string{"&pref;"},
+	"接頭詞,形容詞接続,*,*": []string{
+		"&pref;",
+		"&n;", // several of these in Edict as nouns
+	},
 
 	/*
 	   5.3 Verbs
@@ -301,12 +519,17 @@ var ipaToEdictMapping = map[string][]string{
 	// 5.3.1,3-6,9,13-14,16-19,21,24,26,28,30-34 Verb Independent
 	// ex 「いがみ合う」、「たてつく」、「垢抜ける」
 	// 「くる」「来る」「やってくる」「やって来る」
-	"動詞,自立,*,*": verbEDictTypes,
+	"動詞,自立,*,*": append(verbEDictTypes, []string{
+		"&vs;",
+		"&exp;",
+		"&n;", // counterintuitive but needed for several entries
+		"&adj-f;",
+	}...),
 
 	// 5.3.2,7,10-12,15,20,22,25,27,29 Verb Depdendent
 	// ex 「（て）くる」「（て）来る」
 	// 「しまう」、「ちゃう」、「願う」
-	"動詞,非自立,*,*": verbEDictTypes,
+	"動詞,非自立,*,*": append(verbEDictTypes, "&n;"),
 
 	// 5.3.8,23 Verb Suffix
 	// ex 「する」、「られる」、「させる」、「がかる」
@@ -334,11 +557,29 @@ var ipaToEdictMapping = map[string][]string{
 
 	// 5.5.1 Adverb General
 	// ex 「たいそう」、「人一倍」、「いけしゃあしゃあ」
-	"副詞,一般,*,*": adverbEDictTypes,
+	"副詞,一般,*,*": append(adverbEDictTypes, []string{
+		"&n;",      // needed for several edict entries
+		"&exp;",    // needed for 言わずもがな etc.
+		"&adj-na;", // needed for あだおろそか etc
+		"&conj;",   // needed for さては etc
+		"&int;",    // needed for いずくんぞ etc
+		"&vs;",     // needed for several edict entries
+		"&adj-no;", // needed for 斯く斯く
+		"&pn;",     // needed for ここら
+		"&adj-pn;", // needed for ものの
+	}...),
 
 	// 5.5.2 Adverb Connection Particle
 	// ex 「あまり」、「いつも」、「ぱさぱさ」
-	"副詞,助詞類接続,*,*": adverbEDictTypes,
+	"副詞,助詞類接続,*,*": append(adverbEDictTypes, []string{
+		"&n;",
+		"&exp;",
+		"&int;",
+		"&adj-f;",
+		"&n-t;",
+		"&adj-no;",
+		"&adj-na;",
+	}...),
 
 	/*
 	   5.6 Adjectives (rentaishi)
@@ -347,7 +588,15 @@ var ipaToEdictMapping = map[string][]string{
 	// 5.6.1 Prenominal or attributive adjective
 	// ex 「この」、「いろんな」、「おっきな」、「堂々たる」
 	// https://en.wiktionary.org/wiki/%E9%80%A3%E4%BD%93%E8%A9%9E
-	"連体詞,*,*,*": []string{"&adj-pn;"},
+	"連体詞,*,*,*": []string{
+		"&adj-pn;",
+		"&adj-f;",
+		"&exp;",
+		"&adv;",
+		"&n;",
+		"&adj-no;",
+		"&adv-to;",
+	},
 
 	/*
 	   5.7 Conjunctions
@@ -355,14 +604,23 @@ var ipaToEdictMapping = map[string][]string{
 
 	// 5.7.1 Conjunction
 	// ex 「が」「けれども」「そして」「じゃあ」「それどころか」…
-	"接続詞,*,*,*": []string{"&conj;"},
+	"接続詞,*,*,*": []string{
+		"&conj;",
+		"&exp;", // several conjunctions listed in Edict as expressions
+		"&adv;",
+		"&n-pref;",
+		"&int;",
+		"&n;",
+		"&int;",
+		"&suf;",
+	},
 
 	/*
 	   5.8 Particles
 	*/
 
 	// 5.8.1 Case Particle General
-	"助詞,格助詞,一般,*": []string{"&prt;"},
+	"助詞,格助詞,一般,*": []string{"&prt;", "&n;"},
 
 	// 5.8.2 Quotation
 	// ex 「（～だ）と（述べた．）」「（～である）と（して執行猶予...）」
@@ -373,11 +631,22 @@ var ipaToEdictMapping = map[string][]string{
 	"助詞,格助詞,連語,*": []string{
 		"&exp;",
 		"&prt;",
+		"&adv;",
+		"&conj;",
+		"&n;",
 	},
 
 	// 5.8.4 Conjunction
 	// ex 「て」、「つつ」、「および」、「ので」
-	"助詞,接続助詞,*,*": []string{"&prt;"},
+	"助詞,接続助詞,*,*": []string{
+		"&prt;",
+		"&exp;",
+		"&suf;",
+		"&conj;",
+		"&n-suf;",
+		"&ctr;",
+		"&n-pref;",
+	},
 
 	// 5.8.5 Cohesion
 	// ex 「こそ」「さえ」「しか」「すら」「は」「も」「ぞ」
@@ -388,6 +657,9 @@ var ipaToEdictMapping = map[string][]string{
 	"助詞,副助詞,*,*": []string{
 		"&exp;",
 		"&prt;",
+		"&conj;",
+		"&n;",
+		"&suf;",
 	},
 
 	// 5.8.7 Parallel
@@ -401,7 +673,12 @@ var ipaToEdictMapping = map[string][]string{
 	// 5.8.8 Final
 	// ex 「かしら」、「ぞ」、「っけ」、「わい」
 	// Note The final particle "や" is "(good) or "(wow)", etc.
-	"助詞,終助詞,*,*": []string{"&prt;"},
+	"助詞,終助詞,*,*": []string{
+		"&prt;",
+		"&n-suf;",
+		"&int;",
+		"&suf;",
+	},
 
 	// 5.8.9 Derivative Concurrent/Final
 	// ex 「か」
@@ -425,6 +702,7 @@ var ipaToEdictMapping = map[string][]string{
 		"&int;",
 		"&prt;",
 		"&suf;",
+		"&n;",
 	},
 
 	// 5.8.13 Interjected
@@ -441,6 +719,9 @@ var ipaToEdictMapping = map[string][]string{
 	"助動詞,*,*,*": append(verbEDictTypes, []string{
 		"&aux-adj;",
 		"&aux;",
+		"&exp;", // needed for です
+		"&n;",
+		"&suf;",
 	}...),
 
 	/*
@@ -461,6 +742,8 @@ var ipaToEdictMapping = map[string][]string{
 		"&n;",
 		"&pn;",
 		"&prt;",
+		"&pref;", // last two for ぎょ
+		"&suf;",
 	},
 
 	/*
@@ -484,6 +767,7 @@ var ipaToEdictMapping = map[string][]string{
 		"&exp;",
 		"&int;",
 		"&prt;",
+		"&n;", // needed for えと
 	},
 
 	/*
@@ -541,6 +825,7 @@ var verbEDictTypes = []string{
 	"&v2z-s;",
 	"&v4k;",
 	"&v4m;",
+	"&v4h;",
 	"&v4r;",
 	"&v4s;",
 	"&v4t;",
